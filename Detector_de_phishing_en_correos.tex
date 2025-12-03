@@ -184,8 +184,6 @@ El sistema consta de los siguientes módulos:
     \item \textbf{Entrenamiento:} entrenamiento de Multinomial Naive Bayes y RandomForestClassifier (scikit-learn).
     \item \textbf{Evaluación:} cálculo de accuracy, precision, recall, F1, ROC-AUC y PR-AUC; generación de matriz de confusión y análisis de importancia de variables (Random Forest).
     \item \textbf{Análisis y despliegue:} análisis de casos erróneos, propuestas de mejora y diseño de prototipo para integración en pipeline de correo.
-    \item \textbf{}
-    \item \textbf{}
 \end{enumerate}
 
 \subsection{Preprocesamiento}
@@ -230,23 +228,29 @@ El sistema consta de los siguientes módulos:
 %========================
 \section{Discusión}
 
-\subsection{Comparación de Modelos}
+% \subsection{Comparación de Modelos}
 
-\begin{itemize}
-    \item \blindtext
-\end{itemize}
+% \begin{itemize}
+%     \item \blindtext
+% \end{itemize}
 
-\subsection{Preprocesamiento}
+% \subsection{Preprocesamiento}
 
-\blindtext
+% \blindtext
 
-\subsection{Limitaciones}
+% \subsection{Limitaciones}
 
-\blindtext
+% \blindtext
 
 \subsection{Consideraciones Éticas}
 
-\blindtext
+\begin{itemize}
+    \item El análisis de correos electrónicos implica acceso a información potencialmente sensible (mensajes privados, datos personales). Es obligatorio aplicar principios de minimización de datos, anonimización/pseudonimización y políticas de retención.
+    \item La sobre-representación de ciertos idiomas puede traducirse en mayor tasa de falsos positivos para grupos específicos, siendo idiomas minoritarios, esto añade un sesgo en los datos de entrenamiento.
+    \item Para tratar el sesgo en los datos se recomendaría evaluar métricas por subgrupos, usar muestreo estratificado y técnicas de debiasing.
+    \item La aparición de falsos positivos puede bloquear comunicaciones legítimas y afectar operaciones como pérdida de informacióno demora. Ante esto se deberían aplicar políticas de cuarentena, notificaciones o vías de apelación, umbrales ajustables según el criterio del usuario u organización.
+\end{itemize}
+
 %========================
 \section{Conclusiones}
 
@@ -259,12 +263,12 @@ El sistema consta de los siguientes módulos:
 \blindtext
 %========================
 \begin{thebibliography}{00}
-\bibitem{AbuNimeh2007}
+\bibitem{b1}
 Abu-Nimeh, S., Nappa, D., Wang, X., \& Nair, S. (2007).
 A comparison of machine learning techniques for phishing detection.
 \textit{eCrime Researchers Summit}.
 
-\bibitem{b1}
+\bibitem{b2}
 Fette, I., Sadeh, N., \& Tomasic, A. (2007).
 Learning to detect phishing emails.
 \textit{Proceedings of the 16th International World Wide Web Conference (WWW)}.
@@ -293,6 +297,62 @@ Prentice Hall.
 Goodfellow, I., Bengio, Y., \& Courville, A. (2016).
 \textit{Deep Learning}.
 MIT Press.
+
+\bibitem{b8}
+Bergholz, A., De Beer, J., Glahn, S., Moens, M.-F., Paaß, G., \& Strobel, S. (2010).
+New filtering approaches for phishing email.
+\textit{Journal of Computer Security}, 18(1), 7--35.
+
+\bibitem{b9}
+Biggio, B., \& Roli, F. (2018).
+Wild patterns: Ten years after the rise of adversarial machine learning.
+\textit{Pattern Recognition}, 84, 317--331.
+
+\bibitem{b10}
+Devlin, J., Chang, M.-W., Lee, K., \& Toutanova, K. (2019).
+BERT: Pre-training of deep bidirectional transformers for language understanding.
+\textit{Proceedings of NAACL-HLT}.
+
+\bibitem{b11}
+Garera, S., Provos, N., Chew, M., \& Rubin, A. D. (2007).
+A framework for detection and measurement of phishing attacks.
+\textit{Proceedings of the 2007 ACM Workshop on Recurring Malcode}.
+
+\bibitem{b12}
+Goodfellow, I., Shlens, J., \& Szegedy, C. (2015).
+Explaining and harnessing adversarial examples.
+\textit{International Conference on Learning Representations (ICLR)}.
+
+\bibitem{b13}
+Lundberg, S. M., \& Lee, S.-I. (2017).
+A unified approach to interpreting model predictions.
+\textit{Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\bibitem{b14}
+Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013).
+Efficient estimation of word representations in vector space.
+\textit{ICLR Workshop}.
+
+\bibitem{b15}
+Pennington, J., Socher, R., \& Manning, C. D. (2014).
+GloVe: Global vectors for word representation.
+\textit{EMNLP}.
+
+\bibitem{b16}
+Ribeiro, M. T., Singh, S., \& Guestrin, C. (2016).
+“Why should I trust you?”: Explaining the predictions of any classifier.
+\textit{Proceedings of the 22nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD)}.
+
+\bibitem{b17}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., \& Polosukhin, I. (2017).
+Attention is all you need.
+\textit{Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\bibitem{b18}
+European Parliament and Council. (2016).
+Regulation (EU) 2016/679 (General Data Protection Regulation).
+\textit{Official Journal of the European Union}.
+
 \end{thebibliography}
 
 \section*{Anexos}
