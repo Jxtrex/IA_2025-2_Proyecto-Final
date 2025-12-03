@@ -121,6 +121,56 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 %========================
 \section{Estado del Arte}
 
+\subsection{Enfoques históricos y baselines}
+
+\begin{itemize}
+    \item \textbf{Reglas heurísticas y blacklists:} sistemas tempranos usaban listas negras de dominios/URLs y reglas de coincidencia de patrones; funcionan contra técnicas conocidas pero no contra evasiones (nazario corp).
+    \item \textbf{Filtrado bayesiano y ML clásico:} Multinomial Naive Bayes y SVMs se convirtieron en baseline por su eficiencia y desempeño en datasets textuales (Abu-Nimeh et al., 2007; Fette et al., 2007).
+\end{itemize}
+
+\subsection{Métodos basados en características (features)}
+
+\begin{itemize}
+    \item Investigaciones tempranas mostraron que combinar features de contenido, URL y metadatos mejora la detección. Garera et al. (2007) y Bergholz et al. (2010) analizaron heurísticas de URL y contenido.
+    \item Modelos de ensamblado (Random Forest, Gradient Boosting) demostraron robustez frente a ruido y capacidad para priorizar features relevantes (importancia de variables).
+\end{itemize}
+
+\subsection{Deep learning y representaciones modernas}
+
+\begin{itemize}
+    \item \textbf{CNN/RNN:} capturan patrones locales y secuencias (uso en clasificación de correo).
+    \item \textbf{Transformers (BERT y variantes):} han mostrado mejoras marcadas en clasificación de texto y tareas de seguridad cuando se dispone de datos de calidad o se hace fine-tuning (Devlin et al., 2019).
+    \item \textbf{Enfoques híbridos:} combinar embeddings BERT con features manuales (URL, encabezados) suele ser altamente efectivo, aprovecha semántica de texto y reglas estructurales.
+    \item \textbf{}
+\end{itemize}
+
+\subsection{Datasets y benchmarks comunes}
+
+\begin{itemize}
+    \item \textbf{Enron Email Dataset:} corpus grande de correos empresariales (usado para spam/filtrado y como fuente de ham).
+    \item \textbf{SpamAssassin public corpus:} colección etiquetada de spam y ham.
+    \item \textbf{Phishing corpora / repositorios:} conjuntos públicos con muestras de phishing (por ejemplo PhishTank/Nazario/PhishCorpus).
+    \item Investigaciones recientes también construyen datasets a partir de correos reales anotados y de campañas de phishing actuales; calibrar modelos en datos recientes es crucial.
+\end{itemize}
+
+\subsection{Evaluación práctica y métricas}
+
+\begin{itemize}
+    \item \textbf{Recall prioritario:} en detección de phishing, disminuir falsos negativos suele ser más importante que minimizar falsos positivos.
+    \item \textbf{PR-AUC vs ROC-AUC:} cuando la clase positiva es rara, PR-AUC refleja mejor la capacidad del clasificador para identificar positivos relevantes.
+    \item \textbf{Explicabilidad y análisis de errores:} LIME/SHAP son herramientas para entender decisiones y depurar falsos positivos/negativos.
+\end{itemize}
+
+\subsection{Resumen de hallazgos empíricos}
+
+\begin{itemize}
+    \item Los modelos que combinan features manuales (URL, encabezados) con representaciones semánticas (embeddings o Transformers) tienden a obtener los mejores resultados.
+    \item Random Forest y Gradient Boosting son fuertes competidores cuando los recursos son limitados; Transformers dominan cuando hay datos y cómputo suficientes.
+    \item La robustez a nuevas campañas requiere pipelines de re-entrenamiento y detección de deriva.
+\end{itemize}
+
+\subsection{}
+
 %========================
 \section{Metodología}
 
