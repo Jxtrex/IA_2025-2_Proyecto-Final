@@ -187,6 +187,11 @@ El sistema consta de los siguientes módulos:
     \item \textbf{Análisis y despliegue:} análisis de casos erróneos, propuestas de mejora y diseño de prototipo para integración en pipeline de correo.
 \end{enumerate}
 
+\subsection{Descripción del Dataset}
+Para el desarrollo y evaluación de los modelos propuestos, se utilizó el "Phishing Email Dataset" obtenido del repositorio de Kaggle (Alam, 2020). Este conjunto de datos es una compilación robusta que integra múltiples fuentes de referencia en el ámbito de la ciberseguridad, incluyendo el corpus de Enron para correos corporativos legítimos, el dataset de SpamAssassin y colecciones de correos fraudulentos como el "Nigerian Fraud" y "Nazario".
+
+El dataset final consolidado consta de un total de 82,486 registros únicos. Una ventaja significativa de este recurso es su balance de clases, reduciendo el sesgo natural que suele existir en la detección de anomalías: contiene 42,891 correos etiquetados como phishing (aproximadamente el 52\%) y 39,595 correos legítimos (48\%). Los datos se presentan en dos columnas principales: \texttt{text\_combined}, que contiene la concatenación del asunto y el cuerpo del mensaje sin metadatos de cabecera complejos, y la etiqueta binaria \texttt{label} (0 para legítimo, 1 para phishing).
+
 \subsection{Preprocesamiento}
 
 \begin{enumerate}
