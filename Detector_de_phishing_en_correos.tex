@@ -73,11 +73,53 @@ Desarrollar y evaluar un prototipo de detector de phishing en correos electróni
     \item Se parte de un dataset ya preprocesado (el informe detalla el proceso de preprocesamiento realizado).
 \end{itemize}
 
-\subsection{Marco Teórico}
+%========================
+\section{Marco Teórico}
 
+\subsection{Definición y naturaleza del phishing}
+El phishing es una técnica de ingeniería social que emplea correos (u otros canales) simulando entidades legítimas para inducir a la víctima a revelar credenciales, ejecutar acciones o entregar información sensible. Sus variantes incluyen spear-phishing (ataques dirigidos), whaling (dirigido a ejecutivos) y ataques basados en URL/malware (ver Garera et al., 2007; Fette et al., 2007).
+
+
+\subsection{Representación del texto y fundamentos de PLN}
+
+\begin{itemize}
+    \item \textbf{Tokenización y normalización:} separación en tokens, conversión a minúsculas, normalización Unicode y tratamiento de caracteres especiales (URLs, correos, números).
+    \item \textbf{Stopwords, lematización/stemming:} reducción de forma de palabras para disminuir sparsity.
+    \item \textbf{Bag-of-Words / n-grams:} representación básica que captura presencia/frecuencia de términos y frases cortas; útil con Naive Bayes y modelos lineales.
+    \item \textbf{TF-IDF:} ponderación por frecuencia inversa a la frecuencia en corpus, reduce peso de términos comunes.
+    \item \textbf{Embeddings y representaciones densas:} word2vec/GloVe representan palabras en espacios vectoriales densos; capturan similitud semántica y mejoran cuando se requiere generalización semántica (Mikolov et al., 2013; Pennington et al., 2014).
+    \item \textbf{Representaciones contextualizadas:} Transformers (BERT, RoBERTa) generan embeddings contextuales por token/frase y suelen mejorar el rendimiento en tareas de clasificación de texto si hay datos suficientes (Vaswani et al., 2017; Devlin et al., 2019).
+\end{itemize}
+
+\subsection{Modelos de clasificación supervisada}
+
+\begin{itemize}
+    \item \textbf{Naive Bayes (Multinomial/Bernoulli):} modelo probabilístico asumiendo independencia condicional de características; rápido y efectivo en text mining con bag-of-words/TF-IDF (Manning et al., 2008).
+    \item \textbf{Árboles y ensamblados (Random Forest, Gradient Boosting):} capturan interacciones no lineales entre features; Random Forest es robusto a ruido y poca sintonía de hiperparámetros.
+    \item \textbf{SVM:} buena separación en espacios de alta dimensión, efectivo con kernels y cuando hay margen claro entre clases.
+    \item \textbf{Redes neuronales y Transformers:} CNNs/RNNs (antes dominantes en PLN) y hoy Transformers. Requieren más datos y cómputo, pero capturan mejor semántica y contexto.
+    \item \textbf{Evaluación y selección de modelos:} emplear cross-validation, curvas ROC/PR, y reportar precision/recall/F1 por clase (especialmente recall para detectar phishing).
+\end{itemize}
+
+\subsection{Tipos de features relevantes en detección de phishing}
+
+\begin{itemize}
+    \item \textbf{Contenido textual:} términos sospechosos (“password”, “verify”), patrones de lenguaje urgente, uso de imperativos, errores ortográficos.
+    \item \textbf{Características estructurales:} presencia de URLs, número de enlaces, longitud del correo, HTML vs texto plano, uso de imágenes.
+    \item \textbf{Características del remitente/metadatos:} dominio del remitente, coincidencia entre From y Return-Path, IP de origen, registros SPF/DKIM/DMARC.
+    \item \textbf{Características de la URL:} longitud, uso de subdominios, caracteres especiales, presencia de IP en lugar de dominio, similitud visual con dominios legítimos (homoglyphs).
+    \item \textbf{Comportamiento y contexto:} tasa de envíos por remitente, patrones temporales, reputación del dominio.
+\end{itemize}
+
+\subsection{Problemas técnicos centrales}
+
+\begin{itemize}
+    \item \textbf{Desbalance de clases:} los correos legítimos suelen superar en número a los phishing; requiere técnicas de muestreo (oversampling/SMOTE), o métricas robustas (PR-AUC).
+    \item \textbf{Drift y evolución de ataques:} campañas nuevas cambian vocabulario y tácticas; necesario reentrenamiento y monitorización.
+    \item \textbf{Adversarialidad:} atacantes pueden adaptar textos para evadir detectores; conviene estudiar adversarial ML y robustez (Biggio \& Roli, 2018).
+\end{itemize}
 %========================
 \section{Estado del Arte}
-\blindtext
 
 %========================
 \section{Metodología}
@@ -86,7 +128,7 @@ El sistema consta de los siguientes módulos:
 
 \subsection{Flujo General}
 \begin{enumerate}
-    \item \text{Preprocesamiento:} normalización y limpieza del texto del correo (remoción de HTML, URLs, tokens no alfabéticos), reemplazo de direcciones y números por tokens especiales, minúsculas, eliminación de stopwords, lematización/stemming.
+    \item \textbf{Preprocesamiento:} normalización y limpieza del texto del correo (remoción de HTML, URLs, tokens no alfabéticos), reemplazo de direcciones y números por tokens especiales, minúsculas, eliminación de stopwords, lematización/stemming.
     \item \textbf{Extracción de características:} representación mediante TF-IDF (n-grams unigrama y bigrama), inclusión opcional de features booleanos (presencia de URL, cantidad de enlaces, uso de palabras claves sospechosas) y metadatos (dominio remitente, encabezados).
     \item \textbf{Partición de datos y balanceo:} división Train/Test (p. ej. 80/20) y validación cruzada (5-fold). En presencia de desbalance, aplicación de técnicas como SMOTE o submuestreo estratificado.
     \item \textbf{Entrenamiento:} entrenamiento de Multinomial Naive Bayes y RandomForestClassifier (scikit-learn).
