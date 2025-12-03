@@ -20,69 +20,65 @@
 
 \title{Detector de phishing en correos electrónicos}
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\author{\IEEEauthorblockN{1\textsuperscript{st} Sandro Carrillo}
+\IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
+\textit{Universidad Nacional de Ingeniería}\\
+Lima, Perú \\
+elcorreo@uni.pe}
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\IEEEauthorblockN{2\textsuperscript{nd} Ariana Lopez}
+\IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
+\textit{Universidad Nacional de Ingeniería}\\
+Lima, Perú \\
+elcorreo@uni.pe}
 \and
-\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\IEEEauthorblockN{3\textsuperscript{rd} Albert Argumedo}
+\IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
+\textit{Universidad Nacional de Ingeniería}\\
+Lima, Perú \\
+elcorreo@uni.pe}
 \and
-\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
-\and
-\IEEEauthorblockN{5\textsuperscript{th} Juan de Dios Lerzundi}
+\IEEEauthorblockN{4\textsuperscript{th} Juan de Dios Lerzundi}
 \IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
 \textit{Universidad Nacional de Ingeniería}\\
 Lima, Perú \\
 juan.lerzundi.r@uni.pe}
-\and
-\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
 }
 
 \maketitle
 
 \begin{abstract}
-El phishing por correo electrónico sigue siendo una de las principales amenazas a la seguridad informática. En este trabajo se presenta un sistema de detección de correos electrónicos de phishing basado en técnicas de aprendizaje supervisado y procesamiento de lenguaje natural. Partiendo de un dataset preprocesado, se compararon dos clasificadores clásicos: Multinomial Naive Bayes y Random Forest. El preprocesamiento incluyó limpieza, normalización, tokenización, eliminación de stopwords, lematización y vectorización mediante TF-IDF. La evaluación se realizó mediante validación cruzada y mediciones de precisión, recall, F1-score, ROC-AUC y PR-AUC. Los resultados (placeholders) muestran que Random Forest supera a Naive Bayes en F1 y recall, sugiriendo que los modelos de conjunto aprovechan mejores interacciones entre características textuales. Se discuten implicancias, limitaciones y direcciones futuras, incluyendo el uso de embeddings contextualizados (p. ej. BERT) y la incorporación de metadatos del correo (remitente, dominio, encabezados).
+El phishing por correo electrónico es una de las amenazas más frecuentes en ciberseguridad. Este trabajo presenta un sistema de detección de correos de phishing basado en técnicas de aprendizaje supervisado y procesamiento de lenguaje natural. Se desarrolló un pipeline que incluye limpieza de texto, tokenización y vectorización con TF-IDF, y se evaluaron dos clasificadores: Multinomial Naive Bayes y Random Forest. Los resultados (placeholders) muestran que Random Forest obtiene mayor recall y F1-score, indicando una mejor capacidad para identificar correos maliciosos. Finalmente, se discuten las implicancias del preprocesamiento, limitaciones del modelo y líneas de mejora como el uso de embeddings contextualizados.
 \end{abstract}
 
 \begin{IEEEkeywords}
-phishing, detección de spam, procesamiento de lenguaje natural, Random Forest, Naive Bayes, TF-IDF, clasificación supervisada
+phishing, clasificación, TF-IDF, Random Forest, Naive Bayes, aprendizaje supervisado.
 \end{IEEEkeywords}
 %========================
 \section{Introducción}
 
-\textbf{Contexto y Motivación}\\
+\subsection{Contexto y Motivación}
 El correo electrónico es una herramienta de comunicación masiva usada en ámbitos personales, académicos y empresariales. Su popularidad la convierte en un vector atractivo para ataques de ingeniería social y fraude digital. El phishing (y su forma dirigida spear-phishing) busca engañar al usuario para obtener credenciales o información sensible, provocando pérdidas económicas, robo de identidad y compromiso de sistemas (Fette, Sadeh, \& Tomasic, 2007).
 
-\textbf{Importancia del Problema}\\
+\subsection{Importancia del Problema}
 Los filtros tradicionales basados en listas negras o reglas simples no son suficientemente robustos frente a mensajes que imitan lenguaje legítimo o utilizan pequeñas variaciones en dominios. Por ello, la aplicación de técnicas de IA y procesamiento de lenguaje natural (PLN) para analizar contenido y metadatos del correo es una línea prometedora para mejorar la detección (Abu-Nimeh et al., 2007).
 
-\textbf{Objetivos del Proyecto}\\
+\subsection{Objetivos del Proyecto}
 Desarrollar y evaluar un prototipo de detector de phishing en correos electrónicos utilizando técnicas de Machine Learning y PLN, comparando Naive Bayes y Random Forest sobre un dataset preprocesado, con el objetivo de maximizar la detección (recall) y mantener una F1 alta.
 
-\textbf{Restricciones}\\
+
+\subsection{Restricciones}
 \begin{itemize}
     \item El proyecto se centra en la detección de phishing general (no spear-phishing dirigido).
     \item Se parte de un dataset ya preprocesado (el informe detalla el proceso de preprocesamiento realizado).
 \end{itemize}
+
+\subsection{Marco Teórico}
+
+%========================
+\section{Estado del Arte}
+\blindtext
+
 %========================
 \section{Metodología}
 
@@ -126,6 +122,7 @@ El sistema consta de los siguientes módulos:
     \item \textbf{ROC-AUC y PR-AUC:} dado que la clase positiva puede ser minoritaria, PR-AUC es útil para valorar el rendimiento en detección.
     \item \textbf{Matriz de confusión:} análisis de falsos positivos y falsos negativos (importante por coste distinto de ambos errores).
 \end{itemize}
+
 %========================
 \section{Resultados}
 
@@ -155,6 +152,9 @@ El sistema consta de los siguientes módulos:
 
 \blindtext
 
+\subsection{Consideraciones Éticas}
+
+\blindtext
 %========================
 \section{Conclusiones}
 
@@ -177,27 +177,27 @@ Fette, I., Sadeh, N., \& Tomasic, A. (2007).
 Learning to detect phishing emails.
 \textit{Proceedings of the 16th International World Wide Web Conference (WWW)}.
 
-\bibitem{b2}
+\bibitem{b3}
 Manning, C. D., Raghavan, P., \& Schütze, H. (2008).
 \textit{Introduction to Information Retrieval}.
 Cambridge University Press.
 
-\bibitem{b2}
+\bibitem{b4}
 Mitchell, T. M. (1997).
 \textit{Machine Learning}.
 McGraw-Hill.
 
-\bibitem{b3}
+\bibitem{b5}
 Han, J., Kamber, M., \& Pei, J. (2011).
 \textit{Data Mining: Concepts and Techniques} (3rd ed.).
 Morgan Kaufmann.
 
-\bibitem{b4}
+\bibitem{b6}
 Jurafsky, D., \& Martin, J. H. (2009).
 \textit{Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition}.
 Prentice Hall.
 
-\bibitem{b5}
+\bibitem{b7}
 Goodfellow, I., Bengio, Y., \& Courville, A. (2016).
 \textit{Deep Learning}.
 MIT Press.
