@@ -102,89 +102,70 @@ En este contexto, el uso de técnicas de Inteligencia Artificial y de procesamie
 \section{Marco Teórico}
 
 \subsection{Definición y naturaleza del phishing}
-% T O D O
-%=========
 El phishing es una técnica de ingeniería social que emplea correos y otros canales simulando entidades legítimas para inducir a la víctima a revelar credenciales, ejecutar acciones o entregar información sensible. Sus variantes incluyen spear-phishing (ataques dirigidos), whaling (dirigido a ejecutivos) y ataques basados en URL/malware (\cite{b1} y \cite{b4}).
 
 
 \subsection{Representación del texto y fundamentos de PLN}
-% T O D O
-%=========
 
 \begin{itemize}
     \item \textbf{Tokenización y normalización:} separación en tokens, conversión a minúsculas, normalización Unicode y tratamiento de caracteres especiales (URLs, correos, números).
     \item \textbf{Stopwords, lematización/stemming:} reducción de forma de palabras para disminuir sparsity.
     \item \textbf{Bag of Words (BoW) / n-grams:} representación básica que captura presencia/frecuencia de términos y frases cortas; útil con Naive Bayes y modelos lineales.
     \item \textbf{TF-IDF:} ponderación por frecuencia inversa a la frecuencia en corpus, reduce peso de términos comunes.
-    \item \textbf{Embeddings y representaciones densas:} word2vec/GloVe representan palabras en espacios vectoriales densos; capturan similitud semántica y mejoran cuando se requiere generalización semántica (\cite{b5}; \cite{b6}).
-    \item \textbf{Representaciones contextualizadas:} Transformers (BERT, RoBERTa) generan embeddings contextuales por token o frase y suelen mejorar el rendimiento en tareas de clasificación de texto si hay datos suficientes (\cite{b7}; \cite{b8}).
+    \item \textbf{Embeddings y representaciones densas:} word2vec/GloVe representan palabras en espacios vectoriales densos; capturan similitud semántica y mejoran cuando se requiere generalización semántica (\cite{b5}, \cite{b6}).
+    \item \textbf{Representaciones contextualizadas:} Transformers (BERT, RoBERTa) generan embeddings contextuales por token o frase y suelen mejorar el rendimiento en tareas de clasificación de texto si hay datos suficientes (\cite{b7}, \cite{b8}).
 \end{itemize}
 
 \subsection{Modelos de clasificación supervisada}
-% T O D O
-%=========
 
 \begin{itemize}
-    \item \textbf{Naive Bayes (Multinomial/Bernoulli):} modelo probabilístico asumiendo independencia condicional de características; rápido y efectivo en text mining con bag-of-words/TF-IDF (Manning et al., 2008).
-    \item \textbf{Árboles y ensamblados (Random Forest, Gradient Boosting):} capturan interacciones no lineales entre features; Random Forest es robusto a ruido y poca sintonía de hiperparámetros.
+    \item \textbf{Naive Bayes (Multinomial/Bernoulli):} modelo probabilístico asumiendo independencia condicional de características; rápido y efectivo en text mining con Bag of Words y TF-IDF (\cite{b9}).
+    \item \textbf{Árboles y ensamblados (Random Forest):} capturan interacciones no lineales entre features; Random Forest es robusto a ruido y poca sintonía de hiperparámetros.
     \item \textbf{SVM:} buena separación en espacios de alta dimensión, efectivo con kernels y cuando hay margen claro entre clases.
-    \item \textbf{Redes neuronales y Transformers:} CNNs/RNNs (antes dominantes en PLN) y hoy Transformers. Requieren más datos y cómputo, pero capturan mejor semántica y contexto.
-    \item \textbf{Evaluación y selección de modelos:} emplear cross-validation, curvas ROC/PR, y reportar precision/recall/F1 por clase (especialmente recall para detectar phishing).
+    \item \textbf{Redes neuronales y Transformers:} CNNs, RNNs (antes dominantes en PLN) y hoy Transformers. Requieren más datos y cómputo, pero capturan mejor semántica y contexto.
+    \item \textbf{Evaluación y selección de modelos:} emplear cross validation, curvas ROC-PR, y reportar precision,recall y F1 por clase (especialmente recall para detectar phishing).
 \end{itemize}
 
 \subsection{Tipos de features relevantes en detección de phishing}
-% T O D O
-%=========
 
 \begin{itemize}
-    \item \textbf{Contenido textual:} términos sospechosos (“password”, “verify”), patrones de lenguaje urgente, uso de imperativos, errores ortográficos.
+    \item \textbf{Contenido textual:} términos sospechosos como \textit{\textbf{“password”}}, \textbf{\textit{“verify”}}, patrones de lenguaje urgente, uso de imperativos, errores ortográficos.
     \item \textbf{Características estructurales:} presencia de URLs, número de enlaces, longitud del correo, HTML vs texto plano, uso de imágenes.
-    \item \textbf{Características del remitente/metadatos:} dominio del remitente, coincidencia entre From y Return-Path, IP de origen, registros SPF/DKIM/DMARC.
+    \item \textbf{Características del remitente o metadatos:} dominio del remitente, coincidencia entre From y Return Path, IP de origen, registros SPF, DKIM y DMARC.
     \item \textbf{Características de la URL:} longitud, uso de subdominios, caracteres especiales, presencia de IP en lugar de dominio, similitud visual con dominios legítimos (homoglyphs).
     \item \textbf{Comportamiento y contexto:} tasa de envíos por remitente, patrones temporales, reputación del dominio.
 \end{itemize}
 
 \subsection{Problemas técnicos centrales}
-% T O D O
-%=========
 
 \begin{itemize}
     \item \textbf{Desbalance de clases:} los correos legítimos suelen superar en número a los phishing; requiere técnicas de muestreo (oversampling/SMOTE), o métricas robustas (PR-AUC).
     \item \textbf{Drift y evolución de ataques:} campañas nuevas cambian vocabulario y tácticas; necesario reentrenamiento y monitorización.
-    \item \textbf{Adversarialidad:} atacantes pueden adaptar textos para evadir detectores; conviene estudiar adversarial ML y robustez (Biggio \& Roli, 2018).
+    \item \textbf{Adversarialidad:} atacantes pueden adaptar textos para evadir detectores; conviene estudiar adversarial ML y robustez (\cite{b10}).
 \end{itemize}
 %========================
 \section{Estado del Arte}
-% T O D O
-%=========
 
 \subsection{Enfoques históricos y baselines}
-% T O D O
-%=========
 
 \begin{itemize}
-    \item \textbf{Reglas heurísticas y blacklists:} sistemas tempranos usaban listas negras de dominios/URLs y reglas de coincidencia de patrones; funcionan contra técnicas conocidas pero no contra evasiones (nazario corp).
-    \item \textbf{Filtrado bayesiano y ML clásico:} Multinomial Naive Bayes y SVMs se convirtieron en baseline por su eficiencia y desempeño en datasets textuales (Abu-Nimeh et al., 2007; Fette et al., 2007).
+    \item \textbf{Reglas heurísticas y blacklists:} sistemas tempranos usaban listas negras de dominios, URLs y reglas de coincidencia de patrones; funcionan contra técnicas conocidas pero no contra evasiones (Jose Nazario Phishing Corpus).
+    \item \textbf{Filtrado bayesiano y ML clásico:} Multinomial Naive Bayes y SVMs se convirtieron en baseline por su eficiencia y desempeño en datasets textuales (\cite{b1}, \cite{b2}).
 \end{itemize}
 
 \subsection{Métodos basados en características (features)}
-% T O D O
-%=========
 
 \begin{itemize}
-    \item Investigaciones tempranas mostraron que combinar features de contenido, URL y metadatos mejora la detección. Garera et al. (2007) y Bergholz et al. (2010) analizaron heurísticas de URL y contenido.
+    \item Investigaciones tempranas mostraron que combinar features de contenido, URL y metadatos mejora la detección. \cite{b4} y \cite{b11} analizaron heurísticas de URL y contenido.
     \item Modelos de ensamblado (Random Forest, Gradient Boosting) demostraron robustez frente a ruido y capacidad para priorizar features relevantes (importancia de variables).
 \end{itemize}
 
 \subsection{Deep learning y representaciones modernas}
-% T O D O
-%=========
 
 \begin{itemize}
-    \item \textbf{CNN/RNN:} capturan patrones locales y secuencias (uso en clasificación de correo).
-    \item \textbf{Transformers (BERT y variantes):} han mostrado mejoras marcadas en clasificación de texto y tareas de seguridad cuando se dispone de datos de calidad o se hace fine-tuning (Devlin et al., 2019).
+    \item \textbf{CNN, RNN:} capturan patrones locales y secuencias, clasifican correos.
+    \item \textbf{Transformers (BERT y variantes):} han mostrado mejoras marcadas en clasificación de texto y tareas de seguridad cuando se dispone de datos de calidad o se hace fine tuning (\cite{b8}).
     \item \textbf{Enfoques híbridos:} combinar embeddings BERT con features manuales (URL, encabezados) suele ser altamente efectivo, aprovecha semántica de texto y reglas estructurales.
-    \item \textbf{}
 \end{itemize}
 
 \subsection{Datasets y benchmarks comunes}
@@ -192,7 +173,7 @@ El phishing es una técnica de ingeniería social que emplea correos y otros can
 %=========
 
 \begin{itemize}
-    \item \textbf{Enron Email Dataset:} corpus grande de correos empresariales (usado para spam/filtrado y como fuente de ham).
+    \item \textbf{Enron Email Dataset:} corpus grande de correos empresariales (usado para spam/filtrado y como fuente de ham, \cite{b12}).
     \item \textbf{SpamAssassin public corpus:} colección etiquetada de spam y ham.
     \item \textbf{Phishing corpora / repositorios:} conjuntos públicos con muestras de phishing (por ejemplo PhishTank/Nazario/PhishCorpus).
     \item Investigaciones recientes también construyen datasets a partir de correos reales anotados y de campañas de phishing actuales; calibrar modelos en datos recientes es crucial.
@@ -362,7 +343,6 @@ doi: \href{https://doi.org/10.1145/1299015.1299021}{10.1145/1299015.1299021}.
 \bibitem{b3}
 Naser Abdullah Alam. (2024). Phishing Email Dataset [Data set]. Kaggle. \url{https://doi.org/10.34740/KAGGLE/DS/5074342}
 
-
 \bibitem{b4}
 Garera, S., Provos, N., Chew, M., \& Rubin, A. D. (2007).
 A framework for detection and measurement of phishing attacks.
@@ -396,10 +376,39 @@ Devlin, J., Chang, M.-W., Lee, K., \& Toutanova, K. (2019).
 arXiv preprint arXiv:1810.04805.
 \url{https://arxiv.org/abs/1810.04805}
 
+
+\bibitem{b9}
+Manning, C. D., Raghavan, P., \& Schütze, H. (2009). Introduction to Information Retrieval (Online edition). Cambridge University Press. Disponible en \href{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}{PDF}
+
+
+\bibitem{b10}
+Biggio, B., \& Roli, F. (2018).
+Wild patterns: Ten years after the rise of adversarial machine learning.
+\textit{Pattern Recognition, 84}, 317--331.
+\url{https://doi.org/10.1016/j.patcog.2018.07.023}
+
+\bibitem{b11}
+Bergholz, A., De Beer, J., Glahn, S., Moens, M.-F., Paa\ss{}, G., \& Strobel, S. (2010).
+New filtering approaches for phishing email.
+\textit{Journal of Computer Security, 18}(1), 7--35.
+
+\bibitem{b12}
+Enron Corp y Cohen, W. W. (2015). \textit{Conjunto de datos de correos electrónicos de Enron}. Comisión Reguladora Federal de Energía de los Estados Unidos, comp. [Filadelfia, PA: William W. Cohen, MLD, CMU]. Recurso electrónico. Recuperado de \url{https://www.loc.gov/item/2018487913/}
+
+\bibitem{b13}
+Beato, A. (s.f.). \textit{SpamAssassin Public Corpus}. Kaggle. \url{https://www.kaggle.com/datasets/beatoa/spamassassin-public-corpus} (Corpus público de SpamAssassin del proyecto Apache).
+
+\bibitem{b14}
+PhishTank. (s.f.). \emph{Join the fight against phishing}. Recuperado de \url{https://www.phishtank.com/}
+
+
+\bibitem{b15}
+
+\bibitem{b16}
+
 %============================
 
-\bibitem{b4}
-Manning, C. D., Raghavan, P., \& Schütze, H. (2009). Introduction to Information Retrieval (Online edition). Cambridge University Press. Disponible en \href{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}{PDF}
+
 
 \bibitem{b5}
 Mitchell, T. M. (1997). \textit{Machine learning}. McGraw-Hill Science/Engineering/Math.
@@ -419,16 +428,8 @@ Goodfellow, I., Bengio, Y., \& Courville, A. (2016).
 \textit{Deep learning}. MIT Press.
 Recuperado de \url{http://www.deeplearningbook.org}
 
-\bibitem{b9}
-Bergholz, A., De Beer, J., Glahn, S., Moens, M.-F., Paa\ss{}, G., \& Strobel, S. (2010).
-New filtering approaches for phishing email.
-\textit{Journal of Computer Security, 18}(1), 7--35.
 
-\bibitem{b10}
-Biggio, B., \& Roli, F. (2018).
-Wild patterns: Ten years after the rise of adversarial machine learning.
-\textit{Pattern Recognition, 84}, 317--331.
-\url{https://doi.org/10.1016/j.patcog.2018.07.023}
+
 
 
 
