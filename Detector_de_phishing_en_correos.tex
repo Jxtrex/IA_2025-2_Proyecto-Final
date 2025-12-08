@@ -201,21 +201,97 @@ El phishing es una técnica de ingeniería social que emplea correos y otros can
 
 %========================
 \section{Metodología}
-% T O D O
-%=========
 El sistema consta de los siguientes módulos:
 
-\subsection{Flujo General}
-% T O D O
-%=========
+\subsection{Vision General del pipeline}
+
+El pipeline implementado tiene una serie de pasos reproducibles y modular, consta de las siguientes etapas:
+
 \begin{enumerate}
-    \item \textbf{Preprocesamiento:} normalización y limpieza del texto del correo (remoción de HTML, URLs, tokens no alfabéticos), reemplazo de direcciones y números por tokens especiales, minúsculas, eliminación de stopwords, lematización/stemming.
-    \item \textbf{Extracción de características:} representación mediante TF-IDF (n-grams unigrama y bigrama), inclusión opcional de features booleanos (presencia de URL, cantidad de enlaces, uso de palabras claves sospechosas) y metadatos (dominio remitente, encabezados).
-    \item \textbf{Partición de datos y balanceo:} división Train/Test (p. ej. 80/20) y validación cruzada (5-fold). En presencia de desbalance, aplicación de técnicas como SMOTE o submuestreo estratificado.
-    \item \textbf{Entrenamiento:} entrenamiento de Multinomial Naive Bayes y RandomForestClassifier (scikit-learn).
-    \item \textbf{Evaluación:} cálculo de accuracy, precision, recall, F1, ROC-AUC y PR-AUC; generación de matriz de confusión y análisis de importancia de variables (Random Forest).
-    \item \textbf{Análisis y despliegue:} análisis de casos erróneos, propuestas de mejora y diseño de prototipo para integración en pipeline de correo.
+    \item Adquisición y estandarización del dataset.
+    \item Limpieza y normalización del texto.
+    \item División del dataset en subconjuntos (train, validation y test) o uso de particiones ya provistas.
+    \item Extracción de características textuales mediante TF-IDF (n-grams).
+    \item Entrenamiento de modelos supervisados: Multinomial Naive Bayes (baseline), Logistic Regression (modelo lineal) y Random Forest (modelo de ensamblado).
+    \item Evaluación detallada con métricas (precision, recall, F1-score, ROC-AUC, PR-AUC), análisis de la matriz de confusión y curvas ROC y PR.
+    \item Interpretabilidad: análisis de coeficientes (LR) e importancia de features (RF).
+    \item Persistencia de artefactos (vectorizador, modelos) y documentación de metadatos para reproducibilidad.
 \end{enumerate}
+
+\subsection{Dataset y particionado}
+
+\subsubsection{Origen y formato}
+El conjunto de datos principal es el archivo CSV preprocesado (en el notebook: \texttt{data/processed/all\_emails.csv} y los splits \texttt{data/processed/train.csv}, \texttt{val.csv}, \texttt{test.csv}). Cada fila contiene al menos las columnas: text (contenido del correo) y label ($0 =$ legítimo, $1 =$ phishing). Adicionalmente se mantiene una columna source para identificar la procedencia.
+
+\subsubsection{Estandarización}
+Se ejecuta una función \texttt{build\_standard\_dataframe(df, source\_name)} para homogeneizar nombres de columna, rellenar valores faltantes y asegurar el esquema text, label, source. Se eliminan entradas con text vacío y duplicados exactos (subset=['text','label']).
+
+\subsubsection{Particionado}
+El notebook utiliza un conjunto de splits cargados mediante \texttt{preprocessing.load\_splits()}. Si los splits no están provistos, la práctica estándar es dividir \texttt{all\_emails.csv} en \texttt{train/validation/test} con estratificación por etiqueta (stratify=y) para preservar la proporción de clases. 
+
+\subsection{Preprocesamiento del texto}
+Usaos para reducir el ruido y mejorar la calidad de las representaciones.
+
+Se realiazonr las siguientes operaciones:
+
+\begin{itemize}
+    \item Eliminación de HTML y etiquetas: stripping de etiquetas <$\cdots$> y contenido HTML residual.
+    \item Normalización de espacios y caracteres: normalización Unicode, conversión a minúsculas, eliminación de saltos de línea y múltiples espacios.
+    \item Sustitución de tokens estructurales: reemplazo de patrones por tokens especiales para evitar vocabulario explosivo:
+    \item \begin{itemize}
+        \item URLs → \texttt{<URL>}
+        \item direcciones de correo → \texttt{<EMAIL>}
+        \item números → \texttt{<NUM>}
+    \end{itemize}
+        \item Eliminación de caracteres no imprimibles y puntuación irrelevante (según criterios dependientes del idioma).
+        \item Tokenización (implícita en el \texttt{TfidfVectorizer} de \textbf{\textit{scikit-learn}}) y stopword removal.
+        \item Lematización y stemming : el notebook centraliza el preprocesamiento vía \texttt{preprocessing.py}.
+\end{itemize}
+
+\subsection{Extracción de características (vectorización)}
+
+Se emplea \texttt{sklearn.feature\_extraction.text.TfidfVectorizer} para convertir textos a vectores numéricos esparcidos o sparse matrices. Los parámetros y decisiones principales son:
+
+\begin{itemize}
+    \item \texttt{ngram\_range=(1,2)}: unigramas y bigramas para capturar palabras sueltas y frases cortas como “verify account”.
+    \item \texttt{max\_features=20000} : limitar el vocabulario para controlar dimensionalidad y ruido; ajustar según tamaño del corpus.
+    \item \texttt{sublinear\_tf=True}: usar escala sublineal en la frecuencia ($1 + log(tf)$).
+    \item \texttt{use\_idf=True}, \texttt{smooth\_idf=True}: comportamiento por defecto que favorece raras pero discriminativas palabras.
+    \item \texttt{stop\_words='english'} o lista personalizada, según idioma del dataset.
+    \item \texttt{norm='l2'}: normalización de vectores.
+\end{itemize}
+
+La salida después de la extracción de características es:
+
+\begin{itemize}
+    \item \textbf{Matrices dispersas}: \texttt{X_train}, \texttt{X_val} y \texttt{X_test}
+    \item \textbf{}{vectores} y\_\stackrel{above}{under}
+\end{itemize}
+
+Que se guardan y se reusan para entrenamiento y despliegue. El vectorizados persiste en la línea:\\
+
+\begin{lstlisting}[language=Python]
+joblib.dump('models/tfidf_vectorizer.pkl')
+\end{lstlisting}
+
+\subsection{Modelos y configuración}
+
+Se implementan tres modelos con los hiperparámetros usados en el notebook:
+
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
+% \subsection{Flujo General}
+% % T O D O
+% %=========
+% \begin{enumerate}
+%     , item \text y f{Preprocesamiento:} normalización y limpieza del texto del correo (remoción de HTML, URLs, tokens no alfabéticos), reemplazo de direcciones y números por tokens especiales, minúsculas, eliminación de stopwords, lematización/stemming.
+%     \item \textbf{Extracción de características:} representación mediante TF-IDF (n-grams unigrama y bigrama), inclusión opcional de features booleanos (presencia de URL, cantidad de enlaces, uso de palabras claves sospechosas) y metadatos (dominio remitente, encabezados).
+%     \item \textbf{Partición de datos y balanceo:} división Train/Test (p. ej. 80/20) y validación cruzada (5-fold). En presencia de desbalance, aplicación de técnicas como SMOTE o submuestreo estratificado.
+%     \item \textbf{Entrenamiento:} entrenamiento de Multinomial Naive Bayes y RandomForestClassifier (scikit-learn).
+%     \item \textbf{Evaluación:} cálculo de accuracy, precision, recall, F1, ROC-AUC y PR-AUC; generación de matriz de confusión y análisis de importancia de variables (Random Forest).
+%     \item \textbf{Análisis y despliegue:} análisis de casos erróneos, propuestas de mejora y diseño de prototipo para integración en pipeline de correo.
+% \end{enumerate}
 
 \subsection{Descripción del Dataset}
 Para el desarrollo y evaluación de los modelos propuestos, se utilizó el "Phishing Email Dataset" obtenido del repositorio de Kaggle (Alam, 2020).
