@@ -50,28 +50,36 @@ juan.lerzundi.r@uni.pe}
 \maketitle
 
 \begin{abstract}
-% TODO
-El phishing por correo electrónico es una de las amenazas más frecuentes en ciberseguridad. Este trabajo presenta un sistema de detección de correos de phishing basado en técnicas de aprendizaje supervisado y procesamiento de lenguaje natural. Se desarrolló un pipeline que incluye limpieza de texto, tokenización y vectorización con TF-IDF, y se evaluaron dos clasificadores: Multinomial Naive Bayes y Random Forest. Los resultados (placeholders) muestran que Random Forest obtiene mayor recall y F1-score, indicando una mejor capacidad para identificar correos maliciosos. Finalmente, se discuten las implicancias del preprocesamiento, limitaciones del modelo y líneas de mejora como el uso de embeddings contextualizados.
+El phishing es una de las amenazas prevalentes en ciberseguridad. En este proyecto se implementó un sistema de detección automática basado en técnicas de aprendizaje supervisado y procesamiento de lenguaje natural.
+
+El pipeline consta de preprocesamiento de texto, vectorización mediante TF-IDF y la evaluación de dos clasificacodres principales: Logistic Regressión (LR) y Random Forest. 
+
+Además, se usó Multinomial Naive Bayes como modelo baseline.
 \end{abstract}
 
 \begin{IEEEkeywords}
-% TODO
-phishing, clasificación, TF-IDF, Random Forest, Naive Bayes, aprendizaje supervisado.
+phishing detection,email classification, TF-IDF, Logistic Regression, Random Forest, Naive Bayes, NLP, machine learning.
 \end{IEEEkeywords}
 %========================
 \section{Introducción}
 
 \subsection{Contexto y Motivación}
-El correo electrónico, por su naturaleza masiva, es un medio ideal para ataques maliciosos que buscan engañar a las personas para obtener información sensible. Este tipo de ataque se demonina \textit{phishing}, que se identifica mayormente por el uso de links maliciosos a sitios web que se encargan de obtener información como el número de tarjeta de crédito o credenciales de usuario \cite{b1}.  
+El correo electrónico, por su naturaleza masiva, es usado en ámbitos personales, académicos y empresariales; sin embargo, es un medio ideal para ataques maliciosos que buscan engañar a las personas para obtener información sensible. Este tipo de ataque se demonina \textit{phishing}, que se identifica mayormente por el uso de links maliciosos a sitios web que se encargan de obtener información como el número de tarjeta de crédito o credenciales de usuario \cite{b1}.  
 
 \subsection{Importancia del Problema}
-Los filtros tradicionales basados en listas negras o reglas simples no son suficientemente robustos frente a mensajes que imitan lenguaje legítimo o utilizan pequeñas variaciones en dominios. Por ello, la aplicación de técnicas de IA y procesamiento de lenguaje natural (PLN) para analizar contenido y metadatos del correo es una línea prometedora para mejorar la detección (Abu-Nimeh et al., 2007).
+El correo electrónico, debido a su bajo coste de distribución, y a su adopción masiva, es uno de los principales vectores de ingeniería social. Esto \textbf{implica} que el riesgo de ser víctima de phishing va más allá del aspecto técnico y se centra en la capacidad del usuario para reaccionar ante estos ataques. En el pasado se emplearon filtros basados en listas negras, pero estos ya no resultan suficientes en el escenario actual, en el que los correos imitan con un mayor grado de exactitud el lenguaje natural como los dominios desde los cuales se envían.
+
+En este contexto, el uso de técnicas de Inteligencia Artificial y procesamiento de lenguaje natural nos ofrecen una solución adaptable y escalable, que nos permiten analizar contenido y metadatos del correo para identificar patrones complejos en el contenido del mensaje \cite{b2}. 
 
 \subsection{Objetivos del Proyecto}
+% T O D O
+%=========
 Desarrollar y evaluar un prototipo de detector de phishing en correos electrónicos utilizando técnicas de Machine Learning y PLN, comparando Naive Bayes y Random Forest sobre un dataset preprocesado, con el objetivo de maximizar la detección (recall) y mantener una F1 alta.
 
 
 \subsection{Restricciones}
+% T O D O
+%=========
 \begin{itemize}
     \item El proyecto se centra en la detección de phishing general (no spear-phishing dirigido).
     \item Se parte de un dataset ya preprocesado (el informe detalla el proceso de preprocesamiento realizado).
@@ -79,12 +87,18 @@ Desarrollar y evaluar un prototipo de detector de phishing en correos electróni
 
 %========================
 \section{Marco Teórico}
+% T O D O
+%=========
 
 \subsection{Definición y naturaleza del phishing}
+% T O D O
+%=========
 El phishing es una técnica de ingeniería social que emplea correos (u otros canales) simulando entidades legítimas para inducir a la víctima a revelar credenciales, ejecutar acciones o entregar información sensible. Sus variantes incluyen spear-phishing (ataques dirigidos), whaling (dirigido a ejecutivos) y ataques basados en URL/malware (ver Garera et al., 2007; Fette et al., 2007).
 
 
 \subsection{Representación del texto y fundamentos de PLN}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Tokenización y normalización:} separación en tokens, conversión a minúsculas, normalización Unicode y tratamiento de caracteres especiales (URLs, correos, números).
@@ -96,6 +110,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Modelos de clasificación supervisada}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Naive Bayes (Multinomial/Bernoulli):} modelo probabilístico asumiendo independencia condicional de características; rápido y efectivo en text mining con bag-of-words/TF-IDF (Manning et al., 2008).
@@ -106,6 +122,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Tipos de features relevantes en detección de phishing}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Contenido textual:} términos sospechosos (“password”, “verify”), patrones de lenguaje urgente, uso de imperativos, errores ortográficos.
@@ -116,6 +134,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Problemas técnicos centrales}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Desbalance de clases:} los correos legítimos suelen superar en número a los phishing; requiere técnicas de muestreo (oversampling/SMOTE), o métricas robustas (PR-AUC).
@@ -124,8 +144,12 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 %========================
 \section{Estado del Arte}
+% T O D O
+%=========
 
 \subsection{Enfoques históricos y baselines}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Reglas heurísticas y blacklists:} sistemas tempranos usaban listas negras de dominios/URLs y reglas de coincidencia de patrones; funcionan contra técnicas conocidas pero no contra evasiones (nazario corp).
@@ -133,6 +157,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Métodos basados en características (features)}
+% T O D O
+%=========
 
 \begin{itemize}
     \item Investigaciones tempranas mostraron que combinar features de contenido, URL y metadatos mejora la detección. Garera et al. (2007) y Bergholz et al. (2010) analizaron heurísticas de URL y contenido.
@@ -140,6 +166,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Deep learning y representaciones modernas}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{CNN/RNN:} capturan patrones locales y secuencias (uso en clasificación de correo).
@@ -149,6 +177,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Datasets y benchmarks comunes}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Enron Email Dataset:} corpus grande de correos empresariales (usado para spam/filtrado y como fuente de ham).
@@ -158,6 +188,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Evaluación práctica y métricas}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Recall prioritario:} en detección de phishing, disminuir falsos negativos suele ser más importante que minimizar falsos positivos.
@@ -166,6 +198,8 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \end{itemize}
 
 \subsection{Resumen de hallazgos empíricos}
+% T O D O
+%=========
 
 \begin{itemize}
     \item Los modelos que combinan features manuales (URL, encabezados) con representaciones semánticas (embeddings o Transformers) tienden a obtener los mejores resultados.
@@ -173,14 +207,15 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
     \item La robustez a nuevas campañas requiere pipelines de re-entrenamiento y detección de deriva.
 \end{itemize}
 
-\subsection{}
-
 %========================
 \section{Metodología}
-
+% T O D O
+%=========
 El sistema consta de los siguientes módulos:
 
 \subsection{Flujo General}
+% T O D O
+%=========
 \begin{enumerate}
     \item \textbf{Preprocesamiento:} normalización y limpieza del texto del correo (remoción de HTML, URLs, tokens no alfabéticos), reemplazo de direcciones y números por tokens especiales, minúsculas, eliminación de stopwords, lematización/stemming.
     \item \textbf{Extracción de características:} representación mediante TF-IDF (n-grams unigrama y bigrama), inclusión opcional de features booleanos (presencia de URL, cantidad de enlaces, uso de palabras claves sospechosas) y metadatos (dominio remitente, encabezados).
@@ -191,11 +226,15 @@ El sistema consta de los siguientes módulos:
 \end{enumerate}
 
 \subsection{Descripción del Dataset}
+% T O D O
+%=========
 Para el desarrollo y evaluación de los modelos propuestos, se utilizó el "Phishing Email Dataset" obtenido del repositorio de Kaggle (Alam, 2020). Este conjunto de datos es una compilación robusta que integra múltiples fuentes de referencia en el ámbito de la ciberseguridad, incluyendo el corpus de Enron para correos corporativos legítimos, el dataset de SpamAssassin y colecciones de correos fraudulentos como el "Nigerian Fraud" y "Nazario".
 
 El dataset final consolidado consta de un total de 82,486 registros únicos. Una ventaja significativa de este recurso es su balance de clases, reduciendo el sesgo natural que suele existir en la detección de anomalías: contiene 42,891 correos etiquetados como phishing (aproximadamente el 52\%) y 39,595 correos legítimos (48\%). Los datos se presentan en dos columnas principales: \texttt{text\_combined}, que contiene la concatenación del asunto y el cuerpo del mensaje sin metadatos de cabecera complejos, y la etiqueta binaria \texttt{label} (0 para legítimo, 1 para phishing).
 
 \subsection{Preprocesamiento}
+% T O D O
+%=========
 
 \begin{enumerate}
     \item \textbf{Limpieza:} eliminar etiquetas HTML, normalizar saltos de línea, eliminar caracteres no ASCII si procede.
@@ -207,6 +246,8 @@ El dataset final consolidado consta de un total de 82,486 registros únicos. Una
 \end{enumerate}
 
 \subsection{Modelos}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Multinomial Naive Bayes:} \hl{sklearn.naive\_bayes.MultinomialNB(alpha=1.0)} como baseline para datos textuales.
@@ -215,6 +256,8 @@ El dataset final consolidado consta de un total de 82,486 registros únicos. Una
 \end{itemize}
 
 \subsection{Métricas de evaluación}
+% T O D O
+%=========
 
 \begin{itemize}
     \item \textbf{Precision, Recall, F1-score:} para la clase positiva (phishing).
@@ -224,18 +267,28 @@ El dataset final consolidado consta de un total de 82,486 registros únicos. Una
 
 %========================
 \section{Resultados}
+% T O D O
+%=========
 
 \subsection{Tabla comparativa de métricas}
+% T O D O
+%=========
 
 \blindtext
 
 \subsection{Matrices de confusión}
+% T O D O
+%=========
 
 \blindtext
 
 \subsection{Figuras}
+% T O D O
+%=========
 %========================
 \section{Discusión}
+% T O D O
+%=========
 
 % \subsection{Comparación de Modelos}
 
@@ -252,6 +305,8 @@ El dataset final consolidado consta de un total de 82,486 registros únicos. Una
 % \blindtext
 
 \subsection{Consideraciones Éticas}
+% T O D O
+%=========
 
 \begin{itemize}
     \item El análisis de correos electrónicos implica acceso a información potencialmente sensible (mensajes privados, datos personales). Es obligatorio aplicar principios de minimización de datos, anonimización/pseudonimización y políticas de retención.
@@ -262,12 +317,18 @@ El dataset final consolidado consta de un total de 82,486 registros únicos. Una
 
 %========================
 \section{Conclusiones}
+% T O D O
+%=========
 
 \subsection{Conclusiones Principales}
+% T O D O
+%=========
 
 \blindtext
 
 \subsection{Trabajo a Futuro}
+% T O D O
+%=========
 
 \blindtext
 %========================
@@ -286,7 +347,6 @@ S.~Abu-Nimeh, D.~Nappa, X.~Wang, and S.~Nair,
 in \textit{Proceedings of the Anti-Phishing Working Groups 2nd Annual eCrime Researchers Summit (eCrime '07)},
 Association for Computing Machinery, New York, NY, USA, 2007, pp.~60--69.
 doi: \href{https://doi.org/10.1145/1299015.1299021}{10.1145/1299015.1299021}.
-
 
 
 \bibitem{b3}
