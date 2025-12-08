@@ -11,7 +11,7 @@
 \usepackage{soul}
 \usepackage{url}
 \usepackage{hyperref}
-
+\usepackage{listings}
 % Cambios a nombres
 \renewcommand{\abstractname}{Resumen}
 \renewcommand{\IEEEkeywordsname}{Palabras clave}
@@ -235,10 +235,10 @@ Usaos para reducir el ruido y mejorar la calidad de las representaciones.
 Se realiazonr las siguientes operaciones:
 
 \begin{itemize}
-    \item Eliminación de HTML y etiquetas: stripping de etiquetas <$\cdots$> y contenido HTML residual.
+    \item Eliminación de HTML y etiquetas: stripping de etiquetas <...> y contenido HTML residual.
     \item Normalización de espacios y caracteres: normalización Unicode, conversión a minúsculas, eliminación de saltos de línea y múltiples espacios.
     \item Sustitución de tokens estructurales: reemplazo de patrones por tokens especiales para evitar vocabulario explosivo:
-    \item \begin{itemize}
+    \begin{itemize}
         \item URLs → \texttt{<URL>}
         \item direcciones de correo → \texttt{<EMAIL>}
         \item números → \texttt{<NUM>}
@@ -264,8 +264,8 @@ Se emplea \texttt{sklearn.feature\_extraction.text.TfidfVectorizer} para convert
 La salida después de la extracción de características es:
 
 \begin{itemize}
-    \item \textbf{Matrices dispersas}: \texttt{X_train}, \texttt{X_val} y \texttt{X_test}
-    \item \textbf{}{vectores} y\_\stackrel{above}{under}
+    \item \textbf{Matrices dispersas}: \texttt{X\_train}, \texttt{X\_val} y \texttt{X\_test}
+    \item \textbf{vectores} y\_$\star$
 \end{itemize}
 
 Que se guardan y se reusan para entrenamiento y despliegue. El vectorizados persiste en la línea:\\
@@ -278,9 +278,22 @@ joblib.dump('models/tfidf_vectorizer.pkl')
 
 Se implementan tres modelos con los hiperparámetros usados en el notebook:
 
-\subsubsection{}
-\subsubsection{}
-\subsubsection{}
+\subsubsection{Baseline Multinomial Naive Bayes}
+\begin{itemize}
+    \item \textbf{Clase}: \texttt{sklearn.naive\_bayes.MultinomialNB}
+    \item \textbf{Hiperparámetro principal}: alpha=1.0 (Laplace smoothing) — valor por defecto.
+    \item \textbf{Ventajas}: eficiente, rápido, buen baseline en tasks de texto.
+    \item \textbf{Uso en notebook}: \texttt{baseline.py} contiene la función \texttt{train\_baseline()} que entrena y guarda el modelo.
+\end{itemize}
+
+\subsubsection{Logistic Regression (modelo lineal)}
+\begin{itemize}
+    \item \textbf{Clase}: \texttt{sklearn.linear_model.LogisticRegression}
+    \item \textbf{Parámetros usados}: \texttt{max\_iter=1000}, \texttt{random\_state=42}.
+    \item \textbf{Interpretabilidad}: coeficientes asociados a features posibilitan identificar tokens que aumentan o disminuyen la probabilidad de phishing.
+    \item \textbf{Notas}: \texttt{max\_iter} elevado para asegurar convergencia con vectores de alta dimensión.
+\end{itemize}
+\subsubsection{Random Forest}
 % \subsection{Flujo General}
 % % T O D O
 % %=========
