@@ -261,22 +261,52 @@ El autor solicitó hacer mención al artículo \textit{Novel Interpretable and R
 
 %========================
 \section{Resultados}
-% T O D O
+Para evaluar los resultados de los modelos entrenados usamos las siguientes métricas estándar para clasificación binaria:
+\begin{itemize}
+    \item \textbf{Accuracy:} Indica el porcentaje de emails correctamente clasificados
+    \item \textbf{Precision:} Indica de los marcados como phishing, cuántos realmente lo son 
+    \item \textbf{Recall:} Indica de todos los phishing reales, cuántos detectamos 
+    \item \textbf{F1-Score:} Cálcula la media armónica entre Precision y Recall
+    \item \textbf{Matriz de Confusión:} Detalla los errores por tipo
+\end{itemize}
 %=========
 
 \subsection{Tabla comparativa de métricas}
-% T O D O
+\begin{table}[ht]
+\centering
+\caption{Comparación de métricas entre Logistic Regression y Random Forest}
+\begin{tabular}{lcc}
+\hline
+\textbf{Métrica} & \textbf{Logistic Regression} & \textbf{Random Forest} \\ \hline
+Accuracy  & 0.9830 & 0.9780 \\
+Precision & 0.9823 & 0.9782 \\
+Recall    & 0.9852 & 0.9751 \\
+F1-Score  & 0.9850 & 0.9766 \\ \hline
+\end{tabular}
+\label{tab:comparacion-metricas}
+\end{table}
+
 %=========
 
-\blindtext
 
 \subsection{Matrices de confusión}
-% T O D O
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{imagenes/confusion_logistic_regression.png}
+    \caption{Matriz de confusión del modelo Logistic Regression}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{imagenes/confusion_random_forest.png}
+    \caption{Matriz de confusión del modelo Random Forest}
+\end{figure}
+
 %=========
 
-\blindtext
 
-\subsection{Figuras}
+%\subsection{Figuras}
 % T O D O
 %=========
 %========================
@@ -311,17 +341,25 @@ El autor solicitó hacer mención al artículo \textit{Novel Interpretable and R
 
 %========================
 \section{Conclusiones}
-% T O D O
 %=========
 
 \subsection{Conclusiones Principales}
-% T O D O
+\begin{enumerate}
+    \item Logistic regression resulta ser más adecuado para resolver el problema de clasificación del proyecto: phishing vs no phishing
+    \item El uso de stop words ayudó a evitar sesgos, sin embargo, se debió tener en consideración más palabras para esta lista
+    \item Los predictores de phishing con mayor peso son: “account”, “money”, “click”, “replica”
+    \item Los predictores de ligitimidad con mayor peso son: “thanks”, “opensuse”, “university”
+\end{enumerate}
 %=========
 
 \blindtext
 
 \subsection{Trabajo a Futuro}
-% T O D O
+\begin{enumerate}
+    \item Añadir análisis de URLs embebidas
+    \item Hacer entrenamiento y validación con datasets más modernos
+    \item Implementar el modelo en aplicaciones o plugins de detección para sistemas de correo electrónico
+\end{enumerate}
 %=========
 
 \blindtext
