@@ -26,19 +26,19 @@
 \IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
 \textit{Universidad Nacional de Ingeniería}\\
 Lima, Perú \\
-elcorreo@uni.pe}
+sandro.carrillo.j@uni.pe}
 \and
 \IEEEauthorblockN{2\textsuperscript{nd} Ariana Lopez}
 \IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
 \textit{Universidad Nacional de Ingeniería}\\
 Lima, Perú \\
-elcorreo@uni.pe}
+ariana.lopez.j@uni.pe}
 \and
 \IEEEauthorblockN{3\textsuperscript{rd} Albert Argumedo}
 \IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
 \textit{Universidad Nacional de Ingeniería}\\
 Lima, Perú \\
-elcorreo@uni.pe}
+albert.argumedo.r@uni.pe}
 \and
 \IEEEauthorblockN{4\textsuperscript{th} Juan de Dios Lerzundi}
 \IEEEauthorblockA{\textit{Escuela de Ciencia de la Computación} \\
@@ -189,10 +189,16 @@ El sistema consta de los siguientes módulos:
 \end{enumerate}
 
 \subsection{Descripción del Dataset}
-Para el desarrollo y evaluación de los modelos propuestos, se utilizó el "Phishing Email Dataset" obtenido del repositorio de Kaggle (Alam, 2020). Este conjunto de datos es una compilación robusta que integra múltiples fuentes de referencia en el ámbito de la ciberseguridad, incluyendo el corpus de Enron para correos corporativos legítimos, el dataset de SpamAssassin y colecciones de correos fraudulentos como el "Nigerian Fraud" y "Nazario".
+Para el desarrollo y evaluación de los modelos propuestos, se utilizó el "Phishing Email Dataset" obtenido del repositorio de Kaggle (Alam, 2020).
+Este conjunto de datos es una compilación robusta que integra múltiples fuentes de referencia en el ámbito de la ciberseguridad, incluyendo 
+el corpus de Enron para correos corporativos legítimos, el dataset de SpamAssassin y colecciones de correos fraudulentos como el Nigerian Fraud y Nazario.
 
-El dataset final consolidado consta de un total de 82,486 registros únicos. Una ventaja significativa de este recurso es su balance de clases, reduciendo el sesgo natural que suele existir en la detección de anomalías: contiene 42,891 correos etiquetados como phishing (aproximadamente el 52\%) y 39,595 correos legítimos (48\%). Los datos se presentan en dos columnas principales: \texttt{text\_combined}, que contiene la concatenación del asunto y el cuerpo del mensaje sin metadatos de cabecera complejos, y la etiqueta binaria \texttt{label} (0 para legítimo, 1 para phishing).
+El dataset final consolidado consta de un total de 82,486 registros únicos. 
+Una ventaja significativa de este recurso es su balance de clases, reduciendo el sesgo natural que suele existir en la detección de anomalías: 
+contiene 42,891 correos etiquetados como phishing (aproximadamente el 52\%) y 39,595 correos legítimos (48\%). Los datos se presentan en dos columnas principales: 
+\texttt{text\_combined}, que contiene la concatenación del asunto y el cuerpo del mensaje sin metadatos de cabecera complejos, y la etiqueta binaria \texttt{label} (0 para legítimo, 1 para phishing).
 
+El autor solicitó hacer mención al artículo \textit{Novel Interpretable and Robust Web-based AI Platform for Phishing Email Detection} (Alam et al., 2024).  
 \subsection{Preprocesamiento}
 
 \begin{enumerate}
