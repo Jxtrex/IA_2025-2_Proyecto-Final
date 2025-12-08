@@ -232,6 +232,23 @@ El notebook utiliza un conjunto de splits cargados mediante \texttt{preprocessin
 \subsection{Preprocesamiento del texto}
 Usaos para reducir el ruido y mejorar la calidad de las representaciones.
 
+Se realiazonr las siguientes operaciones:
+
+\begin{itemize}
+    \item Eliminación de HTML y etiquetas: stripping de etiquetas <$\cdots$> y contenido HTML residual.
+    \item Normalización de espacios y caracteres: normalización Unicode, conversión a minúsculas, eliminación de saltos de línea y múltiples espacios.
+    \item Sustitución de tokens estructurales: reemplazo de patrones por tokens especiales para evitar vocabulario explosivo:
+    \item \begin{itemize}
+        \item URLs → <URL>
+        \item direcciones de correo → <EMAIL>
+        \item números → <NUM>
+    \end{itemize}
+    Eliminación de caracteres no imprimibles y puntuación irrelevante (según criterios dependientes del idioma).
+
+Tokenización (implícita en el TfidfVectorizer de scikit-learn) y stopword removal (opcional; se puede usar stopwords del idioma correspondiente).
+
+Lematización/stemming (opcional): el notebook centraliza el preprocesamiento vía preprocessing.py; si se desea, se puede extender para aplicar lematización (SpaCy/NLTK).
+\end{itemize}
 % \subsection{Flujo General}
 % % T O D O
 % %=========
