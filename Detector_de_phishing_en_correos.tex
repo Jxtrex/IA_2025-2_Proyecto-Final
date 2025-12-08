@@ -239,16 +239,48 @@ Se realiazonr las siguientes operaciones:
     \item Normalización de espacios y caracteres: normalización Unicode, conversión a minúsculas, eliminación de saltos de línea y múltiples espacios.
     \item Sustitución de tokens estructurales: reemplazo de patrones por tokens especiales para evitar vocabulario explosivo:
     \item \begin{itemize}
-        \item URLs → <URL>
-        \item direcciones de correo → <EMAIL>
-        \item números → <NUM>
+        \item URLs → \texttt{<URL>}
+        \item direcciones de correo → \texttt{<EMAIL>}
+        \item números → \texttt{<NUM>}
     \end{itemize}
-    Eliminación de caracteres no imprimibles y puntuación irrelevante (según criterios dependientes del idioma).
-
-Tokenización (implícita en el TfidfVectorizer de scikit-learn) y stopword removal (opcional; se puede usar stopwords del idioma correspondiente).
-
-Lematización/stemming (opcional): el notebook centraliza el preprocesamiento vía preprocessing.py; si se desea, se puede extender para aplicar lematización (SpaCy/NLTK).
+        \item Eliminación de caracteres no imprimibles y puntuación irrelevante (según criterios dependientes del idioma).
+        \item Tokenización (implícita en el \texttt{TfidfVectorizer} de \textbf{\textit{scikit-learn}}) y stopword removal.
+        \item Lematización y stemming : el notebook centraliza el preprocesamiento vía \texttt{preprocessing.py}.
 \end{itemize}
+
+\subsection{Extracción de características (vectorización)}
+
+Se emplea \texttt{sklearn.feature\_extraction.text.TfidfVectorizer} para convertir textos a vectores numéricos esparcidos o sparse matrices. Los parámetros y decisiones principales son:
+
+\begin{itemize}
+    \item \texttt{ngram\_range=(1,2)}: unigramas y bigramas para capturar palabras sueltas y frases cortas como “verify account”.
+    \item \texttt{max\_features=20000} : limitar el vocabulario para controlar dimensionalidad y ruido; ajustar según tamaño del corpus.
+    \item \texttt{sublinear\_tf=True}: usar escala sublineal en la frecuencia ($1 + log(tf)$).
+    \item \texttt{use\_idf=True}, \texttt{smooth\_idf=True}: comportamiento por defecto que favorece raras pero discriminativas palabras.
+    \item \texttt{stop\_words='english'} o lista personalizada, según idioma del dataset.
+    \item \texttt{norm='l2'}: normalización de vectores.
+\end{itemize}
+
+La salida después de la extracción de características es:
+
+\begin{itemize}
+    \item \textbf{Matrices dispersas}: \texttt{X_train}, \texttt{X_val} y \texttt{X_test}
+    \item \textbf{}{vectores} y\_\stackrel{above}{under}
+\end{itemize}
+
+Que se guardan y se reusan para entrenamiento y despliegue. El vectorizados persiste en la línea:\\
+
+\begin{lstlisting}[language=Python]
+joblib.dump('models/tfidf_vectorizer.pkl')
+\end{lstlisting}
+
+\subsection{Modelos y configuración}
+
+Se implementan tres modelos con los hiperparámetros usados en el notebook:
+
+\subsubsection{}
+\subsubsection{}
+\subsubsection{}
 % \subsection{Flujo General}
 % % T O D O
 % %=========
