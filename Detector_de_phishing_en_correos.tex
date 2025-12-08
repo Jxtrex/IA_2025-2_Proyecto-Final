@@ -50,17 +50,19 @@ juan.lerzundi.r@uni.pe}
 \maketitle
 
 \begin{abstract}
+% TODO
 El phishing por correo electrónico es una de las amenazas más frecuentes en ciberseguridad. Este trabajo presenta un sistema de detección de correos de phishing basado en técnicas de aprendizaje supervisado y procesamiento de lenguaje natural. Se desarrolló un pipeline que incluye limpieza de texto, tokenización y vectorización con TF-IDF, y se evaluaron dos clasificadores: Multinomial Naive Bayes y Random Forest. Los resultados (placeholders) muestran que Random Forest obtiene mayor recall y F1-score, indicando una mejor capacidad para identificar correos maliciosos. Finalmente, se discuten las implicancias del preprocesamiento, limitaciones del modelo y líneas de mejora como el uso de embeddings contextualizados.
 \end{abstract}
 
 \begin{IEEEkeywords}
+% TODO
 phishing, clasificación, TF-IDF, Random Forest, Naive Bayes, aprendizaje supervisado.
 \end{IEEEkeywords}
 %========================
 \section{Introducción}
 
 \subsection{Contexto y Motivación}
-El correo electrónico es una herramienta de comunicación masiva usada en ámbitos personales, académicos y empresariales. Su popularidad la convierte en un vector atractivo para ataques de ingeniería social y fraude digital. El phishing (y su forma dirigida spear-phishing) busca engañar al usuario para obtener credenciales o información sensible, provocando pérdidas económicas, robo de identidad y compromiso de sistemas (Fette, Sadeh, \& Tomasic, 2007).
+El correo electrónico, por su naturaleza masiva, es un medio ideal para ataques maliciosos que buscan engañar a las personas para obtener información sensible. Este tipo de ataque se demonina \textit{phishing}, que se identifica mayormente por el uso de links maliciosos a sitios web que se encargan de obtener información como el número de tarjeta de crédito o credenciales de usuario \cite{b1}.  
 
 \subsection{Importancia del Problema}
 Los filtros tradicionales basados en listas negras o reglas simples no son suficientemente robustos frente a mensajes que imitan lenguaje legítimo o utilizan pequeñas variaciones en dominios. Por ello, la aplicación de técnicas de IA y procesamiento de lenguaje natural (PLN) para analizar contenido y metadatos del correo es una línea prometedora para mejorar la detección (Abu-Nimeh et al., 2007).
@@ -270,19 +272,22 @@ El dataset final consolidado consta de un total de 82,486 registros únicos. Una
 \blindtext
 %========================
 \begin{thebibliography}{00}
+
 \bibitem{b1}
+I.~Fette, N.~Sadeh, and A.~Tomasic,
+``Learning to detect phishing emails,''
+in \textit{Proceedings of the 16th International Conference on World Wide Web (WWW '07)},
+Association for Computing Machinery, New York, NY, USA, 2007, pp.~649--656.
+doi: \href{https://doi.org/10.1145/1242572.1242660}{10.1145/1242572.1242660}.
+
+    \bibitem{b2}
 S.~Abu-Nimeh, D.~Nappa, X.~Wang, and S.~Nair,
 ``A comparison of machine learning techniques for phishing detection,''
 in \textit{Proceedings of the Anti-Phishing Working Groups 2nd Annual eCrime Researchers Summit (eCrime '07)},
 Association for Computing Machinery, New York, NY, USA, 2007, pp.~60--69.
 doi: \href{https://doi.org/10.1145/1299015.1299021}{10.1145/1299015.1299021}.
 
-\bibitem{b2}
-I.~Fette, N.~Sadeh, and A.~Tomasic,
-``Learning to detect phishing emails,''
-in \textit{Proceedings of the 16th International Conference on World Wide Web (WWW '07)},
-Association for Computing Machinery, New York, NY, USA, 2007, pp.~649--656.
-doi: \href{https://doi.org/10.1145/1242572.1242660}{10.1145/1242572.1242660}.
+
 
 \bibitem{b3}
 Manning, C. D., Raghavan, P., \& Schütze, H. (2009). Introduction to Information Retrieval (Online edition). Cambridge University Press. Disponible en \href{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}{PDF}
