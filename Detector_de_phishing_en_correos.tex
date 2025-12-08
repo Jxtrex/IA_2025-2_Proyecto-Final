@@ -89,11 +89,13 @@ En este contexto, el uso de técnicas de Inteligencia Artificial y de procesamie
 \end{itemize}
 
 \subsection{Restricciones}
-% T O D O
-%=========
 \begin{itemize}
     \item El proyecto se centra en la detección de phishing general (no spear-phishing dirigido).
-    \item Se parte de un dataset ya preprocesado (el informe detalla el proceso de preprocesamiento realizado).
+    \item El proyecto se limita a correos electrónicos ya etiquetados como phishing o legítimos; no se consideran metadatos como cabeceras completas o características asociadas a URLs externas. Usa el dataset en \cite{b3}.
+    \item El archivo se encuentra preprocesao inicialmente.
+    \item La partición de conjuntos de entrenamiento, validación y prueba se realizaa partir del archivo \texttt{phishing\_email.csv}, por lo que la representatividad depende de la distribución original del dataset.
+    \item Se restringe el alcance a clasificadores supervisados clásicos como Naive Bayes, Logistic Regression y Random Forest.
+    \item El entrenamiento se realiza en un entorno limitado como Google Colab, lo cual condiciona la elección de hiperparámetros y el tamaño de los modelos.
 \end{itemize}
 
 %========================
@@ -359,71 +361,74 @@ in \textit{Proceedings of the Anti-Phishing Working Groups 2nd Annual eCrime Res
 Association for Computing Machinery, New York, NY, USA, 2007, pp.~60--69.
 doi: \href{https://doi.org/10.1145/1299015.1299021}{10.1145/1299015.1299021}.
 
-
 \bibitem{b3}
-Manning, C. D., Raghavan, P., \& Schütze, H. (2009). Introduction to Information Retrieval (Online edition). Cambridge University Press. Disponible en \href{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}{PDF}
+Naser Abdullah Alam. (2024). Phishing Email Dataset [Data set]. Kaggle. \url{https://doi.org/10.34740/KAGGLE/DS/5074342}
+
 
 \bibitem{b4}
-Mitchell, T. M. (1997). \textit{Machine learning}. McGraw-Hill Science/Engineering/Math.
+Manning, C. D., Raghavan, P., \& Schütze, H. (2009). Introduction to Information Retrieval (Online edition). Cambridge University Press. Disponible en \href{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}{PDF}
 
 \bibitem{b5}
+Mitchell, T. M. (1997). \textit{Machine learning}. McGraw-Hill Science/Engineering/Math.
+
+\bibitem{b6}
 Han, J., Kamber, M., \& Pei, J. (2011).
 \textit{Data mining: Concepts and techniques} (3rd ed.).
 Recuperado de \url{https://www.scholartext.com/book/88809627?_locale=fr}
 
-\bibitem{b6}
+\bibitem{b7}
 Jurafsky, D., \& Martin, J. H. (2009).
 \textit{Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition}.
 Prentice Hall.
 
-\bibitem{b7}
+\bibitem{b8}
 Goodfellow, I., Bengio, Y., \& Courville, A. (2016).
 \textit{Deep learning}. MIT Press.
 Recuperado de \url{http://www.deeplearningbook.org}
 
-\bibitem{b8}
+\bibitem{b9}
 Bergholz, A., De Beer, J., Glahn, S., Moens, M.-F., Paa\ss{}, G., \& Strobel, S. (2010).
 New filtering approaches for phishing email.
 \textit{Journal of Computer Security, 18}(1), 7--35.
 
-\bibitem{b9}
+\bibitem{b10}
 Biggio, B., \& Roli, F. (2018).
 Wild patterns: Ten years after the rise of adversarial machine learning.
 \textit{Pattern Recognition, 84}, 317--331.
 \url{https://doi.org/10.1016/j.patcog.2018.07.023}
 
-\bibitem{b10}
+\bibitem{b11}
 Devlin, J., Chang, M.-W., Lee, K., \& Toutanova, K. (2019).
 \textit{BERT: Pre-training of deep bidirectional transformers for language understanding}.
 arXiv preprint arXiv:1810.04805.
 \url{https://arxiv.org/abs/1810.04805}
 
-\bibitem{b11}
+\bibitem{b12}
 Garera, S., Provos, N., Chew, M., \& Rubin, A. D. (2007).
 A framework for detection and measurement of phishing attacks.
 En \textit{Proceedings of the 2007 ACM Workshop on Recurring Malcode (WORM '07)}
 (pp. 1--8). Association for Computing Machinery.
 \url{https://doi.org/10.1145/1314389.1314391}
 
-\bibitem{b12}
+\bibitem{b13}
 Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2015).
 \textit{Explaining and harnessing adversarial examples}.
 arXiv preprint arXiv:1412.6572.
 \url{https://arxiv.org/abs/1412.6572}
 
-\bibitem{b13}
+\bibitem{b14}
 Lundberg, S., \& Lee, S.-I. (2017).
 \textit{A unified approach to interpreting model predictions}.
 arXiv preprint arXiv:1705.07874.
 \url{https://arxiv.org/abs/1705.07874}
 
-\bibitem{b14}
+\bibitem{b15}
 Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013).
 \textit{Efficient estimation of word representations in vector space}.
 arXiv preprint arXiv:1301.3781.
 \url{https://arxiv.org/abs/1301.3781}
 
-\bibitem{b15}
+\bibitem{b16}
 Pennington, J., Socher, R., \& Manning, C. D. (2014).
 GloVe: Global vectors for word representation.
 En Moschitti, A., Pang, B., \& Daelemans, W. (Eds.),
@@ -431,27 +436,27 @@ En Moschitti, A., Pang, B., \& Daelemans, W. (Eds.),
 (pp. 1532--1543). Association for Computational Linguistics.
 \url{https://aclanthology.org/D14-1162/}
 
-\bibitem{b16}
+\bibitem{b17}
 Ribeiro, M. T., Singh, S., \& Guestrin, C. (2016).
 \textit{"Why should I trust you?": Explaining the predictions of any classifier}.
 arXiv preprint arXiv:1602.04938.
 \url{https://arxiv.org/abs/1602.04938}
 
-\bibitem{b17}
+\bibitem{b18}
 Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., \& Polosukhin, I. (2023).
 \textit{Attention is all you need}.
 arXiv preprint arXiv:1706.03762.
 \url{https://arxiv.org/abs/1706.03762}
 
-\bibitem{b18}
+\bibitem{b19}
 European Parliament and Council. (2016).
 Regulation (EU) 2016/679 (General Data Protection Regulation).
 \textit{Official Journal of the European Union}.
 
-\bibitem{b19}
+\bibitem{b20}
 Elhoseny, M., Abdel-Salam, M., Khafaga, D. S., Aldakheel, E. A., \& El-Hasnony, I. M. (2025). Robust Optimized Deep Learning-Based Phishing Detection Framework for semantic web systems using boosted triangular topology aggregation optimization. International Journal on Semantic Web and Information Systems, 21(1), 1-58. \url{https://doi.org/10.4018/ijswis.388181}
 
-\bibitem{b20}
+\bibitem{b21}
 Naser Abdullah Alam. (2024). Phishing Email Dataset [Data set]. Kaggle. \url{https://doi.org/10.34740/KAGGLE/DS/5074342}
 
 \end{thebibliography}
