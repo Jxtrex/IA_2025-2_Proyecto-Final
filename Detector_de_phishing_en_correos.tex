@@ -100,13 +100,11 @@ En este contexto, el uso de técnicas de Inteligencia Artificial y de procesamie
 
 %========================
 \section{Marco Teórico}
-% T O D O
-%=========
 
 \subsection{Definición y naturaleza del phishing}
 % T O D O
 %=========
-El phishing es una técnica de ingeniería social que emplea correos (u otros canales) simulando entidades legítimas para inducir a la víctima a revelar credenciales, ejecutar acciones o entregar información sensible. Sus variantes incluyen spear-phishing (ataques dirigidos), whaling (dirigido a ejecutivos) y ataques basados en URL/malware (ver Garera et al., 2007; Fette et al., 2007).
+El phishing es una técnica de ingeniería social que emplea correos y otros canales simulando entidades legítimas para inducir a la víctima a revelar credenciales, ejecutar acciones o entregar información sensible. Sus variantes incluyen spear-phishing (ataques dirigidos), whaling (dirigido a ejecutivos) y ataques basados en URL/malware (\cite{b1} y \cite{b4}).
 
 
 \subsection{Representación del texto y fundamentos de PLN}
@@ -116,10 +114,10 @@ El phishing es una técnica de ingeniería social que emplea correos (u otros ca
 \begin{itemize}
     \item \textbf{Tokenización y normalización:} separación en tokens, conversión a minúsculas, normalización Unicode y tratamiento de caracteres especiales (URLs, correos, números).
     \item \textbf{Stopwords, lematización/stemming:} reducción de forma de palabras para disminuir sparsity.
-    \item \textbf{Bag-of-Words / n-grams:} representación básica que captura presencia/frecuencia de términos y frases cortas; útil con Naive Bayes y modelos lineales.
+    \item \textbf{Bag of Words (BoW) / n-grams:} representación básica que captura presencia/frecuencia de términos y frases cortas; útil con Naive Bayes y modelos lineales.
     \item \textbf{TF-IDF:} ponderación por frecuencia inversa a la frecuencia en corpus, reduce peso de términos comunes.
-    \item \textbf{Embeddings y representaciones densas:} word2vec/GloVe representan palabras en espacios vectoriales densos; capturan similitud semántica y mejoran cuando se requiere generalización semántica (Mikolov et al., 2013; Pennington et al., 2014).
-    \item \textbf{Representaciones contextualizadas:} Transformers (BERT, RoBERTa) generan embeddings contextuales por token/frase y suelen mejorar el rendimiento en tareas de clasificación de texto si hay datos suficientes (Vaswani et al., 2017; Devlin et al., 2019).
+    \item \textbf{Embeddings y representaciones densas:} word2vec/GloVe representan palabras en espacios vectoriales densos; capturan similitud semántica y mejoran cuando se requiere generalización semántica (\cite{b5}; \cite{b6}).
+    \item \textbf{Representaciones contextualizadas:} Transformers (BERT, RoBERTa) generan embeddings contextuales por token o frase y suelen mejorar el rendimiento en tareas de clasificación de texto si hay datos suficientes (\cite{b7}; \cite{b8}).
 \end{itemize}
 
 \subsection{Modelos de clasificación supervisada}
@@ -366,6 +364,41 @@ Naser Abdullah Alam. (2024). Phishing Email Dataset [Data set]. Kaggle. \url{htt
 
 
 \bibitem{b4}
+Garera, S., Provos, N., Chew, M., \& Rubin, A. D. (2007).
+A framework for detection and measurement of phishing attacks.
+En \textit{Proceedings of the 2007 ACM Workshop on Recurring Malcode (WORM '07)}
+(pp. 1--8). Association for Computing Machinery.
+\url{https://doi.org/10.1145/1314389.1314391}
+
+\bibitem{b5}
+Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013).
+\textit{Efficient estimation of word representations in vector space}.
+arXiv preprint arXiv:1301.3781.
+\url{https://arxiv.org/abs/1301.3781}
+
+\bibitem{b6}
+Pennington, J., Socher, R., \& Manning, C. D. (2014).
+GloVe: Global vectors for word representation.
+En Moschitti, A., Pang, B., \& Daelemans, W. (Eds.),
+\textit{Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP)}
+(pp. 1532--1543). Association for Computational Linguistics.
+\url{https://aclanthology.org/D14-1162/}
+
+\bibitem{b7}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., \& Polosukhin, I. (2023).
+\textit{Attention is all you need}.
+arXiv preprint arXiv:1706.03762.
+\url{https://arxiv.org/abs/1706.03762}
+
+\bibitem{b8}
+Devlin, J., Chang, M.-W., Lee, K., \& Toutanova, K. (2019).
+\textit{BERT: Pre-training of deep bidirectional transformers for language understanding}.
+arXiv preprint arXiv:1810.04805.
+\url{https://arxiv.org/abs/1810.04805}
+
+%============================
+
+\bibitem{b4}
 Manning, C. D., Raghavan, P., \& Schütze, H. (2009). Introduction to Information Retrieval (Online edition). Cambridge University Press. Disponible en \href{https://nlp.stanford.edu/IR-book/pdf/irbookonlinereading.pdf}{PDF}
 
 \bibitem{b5}
@@ -397,18 +430,9 @@ Wild patterns: Ten years after the rise of adversarial machine learning.
 \textit{Pattern Recognition, 84}, 317--331.
 \url{https://doi.org/10.1016/j.patcog.2018.07.023}
 
-\bibitem{b11}
-Devlin, J., Chang, M.-W., Lee, K., \& Toutanova, K. (2019).
-\textit{BERT: Pre-training of deep bidirectional transformers for language understanding}.
-arXiv preprint arXiv:1810.04805.
-\url{https://arxiv.org/abs/1810.04805}
 
-\bibitem{b12}
-Garera, S., Provos, N., Chew, M., \& Rubin, A. D. (2007).
-A framework for detection and measurement of phishing attacks.
-En \textit{Proceedings of the 2007 ACM Workshop on Recurring Malcode (WORM '07)}
-(pp. 1--8). Association for Computing Machinery.
-\url{https://doi.org/10.1145/1314389.1314391}
+
+
 
 \bibitem{b13}
 Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2015).
@@ -422,19 +446,8 @@ Lundberg, S., \& Lee, S.-I. (2017).
 arXiv preprint arXiv:1705.07874.
 \url{https://arxiv.org/abs/1705.07874}
 
-\bibitem{b15}
-Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013).
-\textit{Efficient estimation of word representations in vector space}.
-arXiv preprint arXiv:1301.3781.
-\url{https://arxiv.org/abs/1301.3781}
 
-\bibitem{b16}
-Pennington, J., Socher, R., \& Manning, C. D. (2014).
-GloVe: Global vectors for word representation.
-En Moschitti, A., Pang, B., \& Daelemans, W. (Eds.),
-\textit{Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (EMNLP)}
-(pp. 1532--1543). Association for Computational Linguistics.
-\url{https://aclanthology.org/D14-1162/}
+
 
 \bibitem{b17}
 Ribeiro, M. T., Singh, S., \& Guestrin, C. (2016).
@@ -442,11 +455,7 @@ Ribeiro, M. T., Singh, S., \& Guestrin, C. (2016).
 arXiv preprint arXiv:1602.04938.
 \url{https://arxiv.org/abs/1602.04938}
 
-\bibitem{b18}
-Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., \& Polosukhin, I. (2023).
-\textit{Attention is all you need}.
-arXiv preprint arXiv:1706.03762.
-\url{https://arxiv.org/abs/1706.03762}
+
 
 \bibitem{b19}
 European Parliament and Council. (2016).
