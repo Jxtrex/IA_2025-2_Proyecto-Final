@@ -69,13 +69,24 @@ El correo electrónico, por su naturaleza masiva, es usado en ámbitos personale
 \subsection{Importancia del Problema}
 El correo electrónico, debido a su bajo coste de distribución, y a su adopción masiva, es uno de los principales vectores de ingeniería social. Esto \textbf{implica} que el riesgo de ser víctima de phishing va más allá del aspecto técnico y se centra en la capacidad del usuario para reaccionar ante estos ataques. En el pasado se emplearon filtros basados en listas negras, pero estos ya no resultan suficientes en el escenario actual, en el que los correos imitan con un mayor grado de exactitud el lenguaje natural como los dominios desde los cuales se envían.
 
-En este contexto, el uso de técnicas de Inteligencia Artificial y procesamiento de lenguaje natural nos ofrecen una solución adaptable y escalable, que nos permiten analizar contenido y metadatos del correo para identificar patrones complejos en el contenido del mensaje \cite{b2}. 
+En este contexto, el uso de técnicas de Inteligencia Artificial y de procesamiento de lenguaje natural ofrece una solución adaptable y escalable, que permite analizar el contenido y los metadatos del correo para identificar patrones complejos en el contenido del mensaje \cite{b2}. 
 
 \subsection{Objetivos del Proyecto}
-% T O D O
-%=========
-Desarrollar y evaluar un prototipo de detector de phishing en correos electrónicos utilizando técnicas de Machine Learning y PLN, comparando Naive Bayes y Random Forest sobre un dataset preprocesado, con el objetivo de maximizar la detección (recall) y mantener una F1 alta.
 
+\subsubsection{Objetivo General}
+\begin{itemize}
+    \item Implementar un sistema de clasificación automática para identificar el phishing en correos electrónicos mediante técnicas de aprendizaje supervisado y una representación textual basada en TF-IDF.
+\end{itemize}
+
+\subsubsection{Objetivos Específicos}
+\begin{itemize}
+    \item Construir un pipeline reproducible que abarque la limpieza, normalización y vectorización del texto contenido en correos electrónicos etiquetados. (\textcolor{red}{\hl{QUITAR ESTO CUANDO SE HAYA DESCRITO TOTALMENTE EL PIPELINE}})[\hl{Pipeline reproducible}][Obj. aplicación]
+    \item Implementar un modelo baseline utilizando Multinomial Naive Bayes para establecer un punto de referencia en términos de precisión, recall y F1-score. (\textcolor{red}{\hl{QUITAR ESTO CUANDO SE HALLA DEFINIDO LA IMPLEMENTACIÖN DEL BASELINE}})[\hl{Baseline con NB}][Obj. técnico]
+    \item Entrenar y evaluar modelos avanzados, específicamente Logistic Regression y Random Forest. (\textcolor{red}{\hl{QUITAR ESTO CUANDO SE HAYA DADO UNA INTRODUCCIÓN AL ENTRENAMIENTO DEL MODELO}})[\hl{modelos LR y RF}][Obj. técnico]
+    \item Compara el desempeño de los modelos considerando métricas relevantes para el problema de phishing, priorizando la red de falsos negativos medianteel análisis de recall. (\textcolor{red}{\hl{QUITAR ESTO CUANDO SE HAYA HECHO LA COMPARATIVA ENTRE LOS MODELOS}})[\hl{Comparación de modelos}][Obj. evaluación]
+    \item Analizar las características lingüísticas más relevantes para la clasificación mediante coeficientes del modelo y la importancia de atributos. (\textcolor{red}{\hl{QUITAR ESTO CUANDO SE HAYA HECHO EL ANÁLISIS DE LA CLASIFICACIÓN DE LOS DATOS}})[\hl{Análisis de Features}][Obj. ético]
+    \item Identificar oportunidades de mejora y establecer posibles líneas futuras de investigación, como el uso de embeddings contextualizados o modeos basados en Transformers. (\textcolor{red}{\hl{QUITAR ESTO CUANDO SE HAYA HECHO TRABAJO A FUTURO}})[\hl{Trabajo futuro}][Obj. ético]
+\end{itemize}
 
 \subsection{Restricciones}
 % T O D O
