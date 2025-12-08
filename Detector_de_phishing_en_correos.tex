@@ -221,7 +221,7 @@ El pipeline implementado tiene una serie de pasos reproducibles y modular, const
 \subsection{Dataset y particionado}
 
 \subsubsection{Origen y formato}
-El conjunto de datos principal es el archivo CSV preprocesado (en el notebook: \texttt{data/processed/all\_emails.csv} y los splits \texttt{data/processed/train.csv}, \texttt{val.csv}, \texttt{test.csv}). Cada fila contiene al menos las columnas: text (contenido del correo) y label ($0 =$ legítimo, $1 =$ phishing). Adicionalmente se mantiene una columna source para identificar la procedencia.
+El conjunto de datos principal es el archivo CSV preprocesado (en el notebook: \texttt{data/processed/all\_emails.csv} y los splits \texttt{data/processed/train.csv}, \texttt{val.csv}, \texttt{test.csv}). Cada fila contiene al menos las columnas: text (contenido del correo) y label ($0 =$ legítimo, $1 =$ phishing). Adicionalmente se mantiene una columna source para identificar la procedencia (\cite{b3}).
 
 \subsubsection{Estandarización}
 Se ejecuta una función \texttt{build\_standard\_dataframe(df, source\_name)} para homogeneizar nombres de columna, rellenar valores faltantes y asegurar el esquema text, label, source. Se eliminan entradas con text vacío y duplicados exactos (subset=['text','label']).
@@ -322,17 +322,6 @@ Se implementan tres modelos con los hiperparámetros usados en el notebook:
     \end{itemize}
 \end{itemize}
 
-% \subsection{Flujo General}
-% % T O D O
-% %=========
-% \begin{enumerate}
-%     , item \text y f{Preprocesamiento:} normalización y limpieza del texto del correo (remoción de HTML, URLs, tokens no alfabéticos), reemplazo de direcciones y números por tokens especiales, minúsculas, eliminación de stopwords, lematización/stemming.
-%     \item \textbf{Extracción de características:} representación mediante TF-IDF (n-grams unigrama y bigrama), inclusión opcional de features booleanos (presencia de URL, cantidad de enlaces, uso de palabras claves sospechosas) y metadatos (dominio remitente, encabezados).
-%     \item \textbf{Partición de datos y balanceo:} división Train/Test (p. ej. 80/20) y validación cruzada (5-fold). En presencia de desbalance, aplicación de técnicas como SMOTE o submuestreo estratificado.
-%     \item \textbf{Entrenamiento:} entrenamiento de Multinomial Naive Bayes y RandomForestClassifier (scikit-learn).
-%     \item \textbf{Evaluación:} cálculo de accuracy, precision, recall, F1, ROC-AUC y PR-AUC; generación de matriz de confusión y análisis de importancia de variables (Random Forest).
-%     \item \textbf{Análisis y despliegue:} análisis de casos erróneos, propuestas de mejora y diseño de prototipo para integración en pipeline de correo.
-% \end{enumerate}
 
 \subsection{Descripción del Dataset}
 Para el desarrollo y evaluación de los modelos propuestos, se utilizó el "Phishing Email Dataset" obtenido del repositorio de Kaggle (Alam, 2020).
@@ -469,7 +458,6 @@ F1-Score  & 0.9850 & 0.9766 \\ \hline
 \end{enumerate}
 %=========
 
-\blindtext
 
 \subsection{Trabajo a Futuro}
 \begin{enumerate}
@@ -479,7 +467,6 @@ F1-Score  & 0.9850 & 0.9766 \\ \hline
 \end{enumerate}
 %=========
 
-\blindtext
 %========================
 \begin{thebibliography}{00}
 
