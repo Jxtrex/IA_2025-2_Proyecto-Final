@@ -288,12 +288,40 @@ Se implementan tres modelos con los hiperparámetros usados en el notebook:
 
 \subsubsection{Logistic Regression (modelo lineal)}
 \begin{itemize}
-    \item \textbf{Clase}: \texttt{sklearn.linear_model.LogisticRegression}
+    \item \textbf{Clase}: \texttt{sklearn.linear\_model.LogisticRegression}
     \item \textbf{Parámetros usados}: \texttt{max\_iter=1000}, \texttt{random\_state=42}.
     \item \textbf{Interpretabilidad}: coeficientes asociados a features posibilitan identificar tokens que aumentan o disminuyen la probabilidad de phishing.
     \item \textbf{Notas}: \texttt{max\_iter} elevado para asegurar convergencia con vectores de alta dimensión.
 \end{itemize}
 \subsubsection{Random Forest}
+\begin{itemize}
+    \item \textbf{Clase}: \texttt{sklearn.ensemble.RandomForestClassifier}
+    \item \textbf{Parámetros usados}: \texttt{n\_estimators=100}, \texttt{random\_state=42}, \texttt{n\_jobs=-1}.
+    \item \textbf{Salida de interés}: \texttt{feature\_importances\_} para análisis de importancia de tokens.
+    \item \textbf{Ventajas}: captura interacciones no lineales entre features, robusto ante ruido.
+\end{itemize}
+
+\subsection{Procedimiento de entrenamiento y validación}
+
+\subsubsection{Entrenamiento reproducible}
+
+\begin{enumerate}
+    \item Cargar \texttt{X\_train}, \texttt{y\_train} y el vectorizador ya ajustado.
+    \item Ajustar el modelo con \texttt{model.fit(X\_train, y\_train)}.
+    \item Evaluar en \texttt{X\_val} y finalmente en \texttt{X\_test} (holdout) para estimación final.
+\end{enumerate}
+\subsubsection{Validación y tuning}
+
+\begin{itemize}
+    \item Para selección de hiperparámetros se recomienda \textbf{GridSearchCV} o \textbf{RandomizedSearchCV} sobre la partición de validación o mediante cross validation estratificada.
+    \item Rango de búsqueda sugerido:
+    \begin{itemize}
+        \item Logistic Regression: \texttt{C = [0.01, 0.1, 1, 10]}, \texttt{penalty = ['l2']}.
+        \item Random Forest: \texttt{n\_estimators = [100, 200, 500]}, \texttt{max\_depth = [None, 10, 50, 100]}, \texttt{min\_samples\_split = [2, 5, 10]}.
+        \item Naive Bayes: \texttt{alpha = [0.1, 0.5, 1.0]}.
+    \end{itemize}
+\end{itemize}
+
 % \subsection{Flujo General}
 % % T O D O
 % %=========
