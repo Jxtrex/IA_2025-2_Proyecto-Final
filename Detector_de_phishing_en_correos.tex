@@ -12,7 +12,17 @@
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{listings}
-% Cambios a nombres
+\usepackage[cache=false]{minted}
+\usepackage{fontspec}
+\usepackage{float}
+
+% Nueva fuenta para los listings
+\newfontfamily\codefont[Path=./fonts/]{JetBrainsMono-Regular.ttf}
+\renewcommand{\ttfamily}{\codefont}  % Map to default typewriter family used by minted
+
+
+
+% Definir comandos
 \renewcommand{\abstractname}{Resumen}
 \renewcommand{\IEEEkeywordsname}{Palabras clave}
 
@@ -67,7 +77,7 @@ phishing detection,email classification, TF-IDF, Logistic Regression, Random For
 El correo electrónico, por su naturaleza masiva, es usado en ámbitos personales, académicos y empresariales; sin embargo, es un medio ideal para ataques maliciosos que buscan engañar a las personas para obtener información sensible. Este tipo de ataque se demonina \textit{phishing}, que se identifica mayormente por el uso de links maliciosos a sitios web que se encargan de obtener información como el número de tarjeta de crédito o credenciales de usuario \cite{b1}.  
 
 \subsection{Importancia del Problema}
-El correo electrónico, debido a su bajo coste de distribución, y a su adopción masiva, es uno de los principales vectores de ingeniería social. Esto \textbf{implica} que el riesgo de ser víctima de phishing va más allá del aspecto técnico y se centra en la capacidad del usuario para reaccionar ante estos ataques. En el pasado se emplearon filtros basados en listas negras, pero estos ya no resultan suficientes en el escenario actual, en el que los correos imitan con un mayor grado de exactitud el lenguaje natural como los dominios desde los cuales se envían.
+El correo electrónico, debido a su bajo coste de distribución, y a su adopción masiva, es uno de los principales vectores de ingeniería social. Esto implica que el riesgo de ser víctima de phishing va más allá del aspecto técnico y se centra en la capacidad del usuario para reaccionar ante estos ataques. En el pasado se emplearon filtros basados en listas negras, pero estos ya no resultan suficientes en el escenario actual, en el que los correos imitan con un mayor grado de exactitud el lenguaje natural como los dominios desde los cuales se envían.
 
 En este contexto, el uso de técnicas de Inteligencia Artificial y de procesamiento de lenguaje natural ofrece una solución adaptable y escalable, que permite analizar el contenido y los metadatos del correo para identificar patrones complejos en el contenido del mensaje \cite{b2}. 
 
@@ -169,29 +179,23 @@ El phishing es una técnica de ingeniería social que emplea correos y otros can
 \end{itemize}
 
 \subsection{Datasets y benchmarks comunes}
-% T O D O
-%=========
 
 \begin{itemize}
     \item \textbf{Enron Email Dataset:} corpus grande de correos empresariales (usado para spam/filtrado y como fuente de ham, \cite{b12}).
-    \item \textbf{SpamAssassin public corpus:} colección etiquetada de spam y ham.
-    \item \textbf{Phishing corpora / repositorios:} conjuntos públicos con muestras de phishing (por ejemplo PhishTank/Nazario/PhishCorpus).
+    \item \textbf{SpamAssassin public corpus:} colección etiquetada de spam y ham \cite{b13}.
+    \item \textbf{Phishing corpora y repositorios:} conjuntos públicos con muestras de phishing (\cite{b14}, Nazario y PhishCorpus).
     \item Investigaciones recientes también construyen datasets a partir de correos reales anotados y de campañas de phishing actuales; calibrar modelos en datos recientes es crucial.
 \end{itemize}
 
 \subsection{Evaluación práctica y métricas}
-% T O D O
-%=========
 
 \begin{itemize}
     \item \textbf{Recall prioritario:} en detección de phishing, disminuir falsos negativos suele ser más importante que minimizar falsos positivos.
     \item \textbf{PR-AUC vs ROC-AUC:} cuando la clase positiva es rara, PR-AUC refleja mejor la capacidad del clasificador para identificar positivos relevantes.
-    \item \textbf{Explicabilidad y análisis de errores:} LIME/SHAP son herramientas para entender decisiones y depurar falsos positivos/negativos.
+    \item \textbf{Explicabilidad y análisis de errores:} LIME, SHAP son herramientas para entender decisiones y depurar falsos positivos/negativos.
 \end{itemize}
 
 \subsection{Resumen de hallazgos empíricos}
-% T O D O
-%=========
 
 \begin{itemize}
     \item Los modelos que combinan features manuales (URL, encabezados) con representaciones semánticas (embeddings o Transformers) tienden a obtener los mejores resultados.
@@ -250,7 +254,18 @@ Se realiazonr las siguientes operaciones:
 
 \subsection{Extracción de características (vectorización)}
 
-Se emplea \texttt{sklearn.feature\_extraction.text.TfidfVectorizer} para convertir textos a vectores numéricos esparcidos o sparse matrices. Los parámetros y decisiones principales son:
+Se emplea 
+\begin{minted}[
+    linenos,
+    fontsize=\small,
+    frame=single,
+    framesep=6pt,
+    bgcolor=gray!5
+]{python}
+sklearn.feature_extraction.text.TfidfVectorizer
+\end{minted}
+
+para convertir textos a vectores numéricos esparcidos o sparse matrices. Los parámetros y decisiones principales son:
 
 \begin{itemize}
     \item \texttt{ngram\_range=(1,2)}: unigramas y bigramas para capturar palabras sueltas y frases cortas como “verify account”.
@@ -270,9 +285,16 @@ La salida después de la extracción de características es:
 
 Que se guardan y se reusan para entrenamiento y despliegue. El vectorizados persiste en la línea:\\
 
-\begin{lstlisting}[language=Python]
+%====== Code Listing 3
+\begin{minted}[
+    linenos,
+    fontsize=\small,
+    frame=single,
+    framesep=6pt,
+    bgcolor=gray!5
+]{python}
 joblib.dump('models/tfidf_vectorizer.pkl')
-\end{lstlisting}
+\end{minted}
 
 \subsection{Modelos y configuración}
 
@@ -288,6 +310,7 @@ Se implementan tres modelos con los hiperparámetros usados en el notebook:
 
 \subsubsection{Logistic Regression (modelo lineal)}
 \begin{itemize}
+    \item \mintinline{python}{sklearn.linear_model.LogisticRegression}
     \item \textbf{Clase}: \texttt{sklearn.linear\_model.LogisticRegression}
     \item \textbf{Parámetros usados}: \texttt{max\_iter=1000}, \texttt{random\_state=42}.
     \item \textbf{Interpretabilidad}: coeficientes asociados a features posibilitan identificar tokens que aumentan o disminuyen la probabilidad de phishing.
@@ -334,30 +357,16 @@ contiene 42,891 correos etiquetados como phishing (aproximadamente el 52\%) y 39
 \texttt{text\_combined}, que contiene la concatenación del asunto y el cuerpo del mensaje sin metadatos de cabecera complejos, y la etiqueta binaria \texttt{label} (0 para legítimo, 1 para phishing).
 
 El autor solicitó hacer mención al artículo \textit{Novel Interpretable and Robust Web-based AI Platform for Phishing Email Detection} (Alam et al., 2024).  
-\subsection{Preprocesamiento}
-
-\begin{enumerate}
-    \item \textbf{Limpieza:} eliminar etiquetas HTML, normalizar saltos de línea, eliminar caracteres no ASCII si procede.
-    \item \textbf{Normalización:} pasar a minúsculas, normalizar acentos.
-    \item \textbf{Tokens especiales:} reemplazar URLs por \texttt{<URL>}, direcciones de email por \texttt{<EMAIL>} y números por \texttt{<NUM>}.
-    \item \textbf{Tokenización:} separación en tokens — se consideraron n-grams (1,2).
-    \item \textbf{Stopwords \& Lematización:} remover palabras funcionales y lematizar para reducir variabilidad morfológica.
-    \item \textbf{Vectorización:} TF-IDF con límite de vocabulario (p. ej. max\_features=20,000), ngram\_range=(1,2), y sublinear\_tf=True.
-\end{enumerate}
 
 \subsection{Modelos}
-% T O D O
-%=========
 
 \begin{itemize}
-    \item \textbf{Multinomial Naive Bayes:} \hl{sklearn.naive\_bayes.MultinomialNB(alpha=1.0)} como baseline para datos textuales.
-    \item \textbf{Random Forest:} \hl{sklearn.ensemble.RandomForestClassifier} \hl{(n\_estimators=200, max\_depth=None, n\_jobs=-1, random\_state=42)} usado para capturar interacciones entre tokens y es robusto a features ruidosos.
+    \item \textbf{Multinomial Naive Bayes:} \mintinline{python}{sklearn.naive_bayes.MultinomialNB(alpha=1.0)}
+    \item \textbf{Random Forest:} \mintinline{python}{sklearn.ensemble.RandomForestClassifier} \mintinline{python}{(n_estimators=200, max_depth=None, n_jobs=-1, random_state=42)} usado para capturar interacciones entre tokens y es robusto a features ruidosos.
     \item \textbf{Validación:} 5-fold cross-validation y evaluación sobre test holdout (80/20). Se reportan métricas promedio y desviación estándar.
 \end{itemize}
 
 \subsection{Métricas de evaluación}
-% T O D O
-%=========
 
 \begin{itemize}
     \item \textbf{Precision, Recall, F1-score:} para la clase positiva (phishing).
@@ -547,82 +556,114 @@ PhishTank. (s.f.). \emph{Join the fight against phishing}. Recuperado de \url{ht
 
 
 \bibitem{b15}
-
-\bibitem{b16}
+R. Sood, \emph{Phishing email dataset Nazario\_5 and TREC07}. Kaggle, 2023. [En línea]. Disponible: \url{https://www.kaggle.com/datasets/rohansood98/phishing-email-dataset-nazario-5-and-trec07}
 
 %============================
 
 
 
-\bibitem{b5}
-Mitchell, T. M. (1997). \textit{Machine learning}. McGraw-Hill Science/Engineering/Math.
+% \bibitem{b5}
+% Mitchell, T. M. (1997). \textit{Machine learning}. McGraw-Hill Science/Engineering/Math.
 
-\bibitem{b6}
-Han, J., Kamber, M., \& Pei, J. (2011).
-\textit{Data mining: Concepts and techniques} (3rd ed.).
-Recuperado de \url{https://www.scholartext.com/book/88809627?_locale=fr}
+% \bibitem{b6}
+% Han, J., Kamber, M., \& Pei, J. (2011).
+% \textit{Data mining: Concepts and techniques} (3rd ed.).
+% Recuperado de \url{https://www.scholartext.com/book/88809627?_locale=fr}
 
-\bibitem{b7}
-Jurafsky, D., \& Martin, J. H. (2009).
-\textit{Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition}.
-Prentice Hall.
+% \bibitem{b7}
+% Jurafsky, D., \& Martin, J. H. (2009).
+% \textit{Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition}.
+% Prentice Hall.
 
-\bibitem{b8}
-Goodfellow, I., Bengio, Y., \& Courville, A. (2016).
-\textit{Deep learning}. MIT Press.
-Recuperado de \url{http://www.deeplearningbook.org}
-
-
+% \bibitem{b8}
+% Goodfellow, I., Bengio, Y., \& Courville, A. (2016).
+% \textit{Deep learning}. MIT Press.
+% Recuperado de \url{http://www.deeplearningbook.org}
 
 
 
 
 
 
-\bibitem{b13}
-Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2015).
-\textit{Explaining and harnessing adversarial examples}.
-arXiv preprint arXiv:1412.6572.
-\url{https://arxiv.org/abs/1412.6572}
-
-\bibitem{b14}
-Lundberg, S., \& Lee, S.-I. (2017).
-\textit{A unified approach to interpreting model predictions}.
-arXiv preprint arXiv:1705.07874.
-\url{https://arxiv.org/abs/1705.07874}
 
 
+% \bibitem{b13}
+% Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2015).
+% \textit{Explaining and harnessing adversarial examples}.
+% arXiv preprint arXiv:1412.6572.
+% \url{https://arxiv.org/abs/1412.6572}
 
-
-\bibitem{b17}
-Ribeiro, M. T., Singh, S., \& Guestrin, C. (2016).
-\textit{"Why should I trust you?": Explaining the predictions of any classifier}.
-arXiv preprint arXiv:1602.04938.
-\url{https://arxiv.org/abs/1602.04938}
+% \bibitem{b14}
+% Lundberg, S., \& Lee, S.-I. (2017).
+% \textit{A unified approach to interpreting model predictions}.
+% arXiv preprint arXiv:1705.07874.
+% \url{https://arxiv.org/abs/1705.07874}
 
 
 
-\bibitem{b19}
-European Parliament and Council. (2016).
-Regulation (EU) 2016/679 (General Data Protection Regulation).
-\textit{Official Journal of the European Union}.
 
-\bibitem{b20}
-Elhoseny, M., Abdel-Salam, M., Khafaga, D. S., Aldakheel, E. A., \& El-Hasnony, I. M. (2025). Robust Optimized Deep Learning-Based Phishing Detection Framework for semantic web systems using boosted triangular topology aggregation optimization. International Journal on Semantic Web and Information Systems, 21(1), 1-58. \url{https://doi.org/10.4018/ijswis.388181}
+% \bibitem{b17}
+% Ribeiro, M. T., Singh, S., \& Guestrin, C. (2016).
+% \textit{"Why should I trust you?": Explaining the predictions of any classifier}.
+% arXiv preprint arXiv:1602.04938.
+% \url{https://arxiv.org/abs/1602.04938}
 
-\bibitem{b21}
-Naser Abdullah Alam. (2024). Phishing Email Dataset [Data set]. Kaggle. \url{https://doi.org/10.34740/KAGGLE/DS/5074342}
+
+
+% \bibitem{b19}
+% European Parliament and Council. (2016).
+% Regulation (EU) 2016/679 (General Data Protection Regulation).
+% \textit{Official Journal of the European Union}.
+
+% \bibitem{b20}
+% Elhoseny, M., Abdel-Salam, M., Khafaga, D. S., Aldakheel, E. A., \& El-Hasnony, I. M. (2025). Robust Optimized Deep Learning-Based Phishing Detection Framework for semantic web systems using boosted triangular topology aggregation optimization. International Journal on Semantic Web and Information Systems, 21(1), 1-58. \url{https://doi.org/10.4018/ijswis.388181}
+
+% \bibitem{b21}
+% Naser Abdullah Alam. (2024). Phishing Email Dataset [Data set]. Kaggle. \url{https://doi.org/10.34740/KAGGLE/DS/5074342}
 
 \end{thebibliography}
 
-\section*{Anexos}
+% \section*{Anexos}
 
-\begin{itemize}
-    \item \textbf{Anexo A:} Código (notebook Colab) con pipeline completo (preprocesamiento, vectorización, entrenamiento y evaluación).
-    \item \textbf{Anexo B:} Parámetros exactos de los modelos y resultados de las 5 corridas cross-validation (media y desviación estándar).
-    \item \textbf{Anexo C:} Plots (Figura 1, Figura 2, Figura 3) y matrices de confusión.
-    \item \textbf{Anexo D:} Tabla detallada de distribución de trabajo y cronograma (según requisitos del curso).
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{Anexo A:} Código (notebook Colab) con pipeline completo (preprocesamiento, vectorización, entrenamiento y evaluación).
+%     \item \textbf{Anexo B:} Parámetros exactos de los modelos y resultados de las 5 corridas cross-validation (media y desviación estándar).
+%     \item \textbf{Anexo C:} Plots (Figura 1, Figura 2, Figura 3) y matrices de confusión.
+%     \item \textbf{Anexo D:} Tabla detallada de distribución de trabajo y cronograma (según requisitos del curso).
+% \end{itemize}
 
 
 \end{document}
+% %====== Code Listing 1
+% \begin{listing}[H]
+%     \begin{minted}[
+%         bgcolor=gray!10,
+%         fontsize=\small,
+%         linenos,
+%         numbersep=5pt,
+%         frame=lines,
+%         framesep=10pt]
+%         {python}
+%     def fibonacci(n):
+%         if n <= 1:
+%             return n
+%         return fibonacci(n-1) + fibonacci(n-2)
+%     \end{minted}
+% \caption{Elegant Fibonacci in Python with subtle background and line numbers.}
+% \label{lst:fib}
+% \end{listing}
+% %====== Code Listing 2
+% \begin{minted}[linenos]{python}
+%   for i in range(0,2):
+%       print(i)
+% \end{minted}
+% %====== Code Listing 3
+% \begin{minted}[
+%     linenos,
+%     fontsize=\small,
+%     frame=single,
+%     framesep=6pt,
+%     bgcolor=gray!5
+% ]{python}
+% joblib.dump('models/tfidf_vectorizer.pkl')
+% \end{minted}
